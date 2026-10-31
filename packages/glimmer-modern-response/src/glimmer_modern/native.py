@@ -12,7 +12,8 @@ from particle_sliders.fibo_hndl import HNDLParticleProjection
 from particle_sliders.lifecycle import native_cleanup
 from particle_sliders.pg09_audio import ARLastHiddenResponseAdapter
 
-from . import PROTOCOL
+from . import PROTOCOL, INITIALIZATION_POLICY
+from .initialization import initialization_rng
 from .provenance import verify_sources
 
 TARGET = re.compile(r"model\.language_model\.layers\.(\d+)\.self_attn\.(q_proj|k_proj|v_proj|o_proj)")
@@ -105,17 +106,20 @@ def model_identity(model):
 
 
 class Slider(nn.Module):
-    def __init__(self, model):
+    def __init__(self, model, *, seed=7):
         super().__init__()
         selected = targets(model)
         builder, identity = verify_sources()  # Before any model mutation.
+        identity = dict(identity, initialization_policy=INITIALIZATION_POLICY, initialization_seed=seed)
         self.identity = identity
-        self.particles = nn.Parameter(torch.randn(128, 4))
+        with initialization_rng(seed, "bank"):
+            self.particles = nn.Parameter(torch.randn(128, 4, device="cpu"))
         self.branches = nn.ModuleDict()
         # Build every graph before changing any native forward or gradient flag.
         for index, (name, module) in enumerate(selected.items()):
-            self.branches[str(index)] = HNDLParticleProjection(name, module, self.particles,
-                8, 8, builder=builder, identity=identity, attach=False)
+            with initialization_rng(seed, "projection:" + name):
+                self.branches[str(index)] = HNDLParticleProjection(name, module, self.particles,
+                    8, 8, builder=builder, identity=identity, attach=False)
         self._targets = selected
         self._restore = _native_cleanup(model)
         self._modes = [(m, m.training) for m in model.modules()]
@@ -194,11 +198,12 @@ class GlimmerResponse(ARLastHiddenResponseAdapter):
 
 
 class Native:
-    def __init__(self, model):
+    def __init__(self, model, *, seed=7):
         targets(model)  # Reject unqualified geometry before hashing or mutation.
         self.model = model
         self.identity = model_identity(model)
-        self.slider = Slider(model)
+        self.slider = Slider(model, seed=seed)
+        self.initialization = dict(policy=INITIALIZATION_POLICY, seed=seed)
         try:
             self.backend = GlimmerResponse(model, self.slider, model_identity=self.identity)
             self.network = self.backend.network
@@ -211,6 +216,7 @@ class Native:
 
     def metadata(self):
         return dict(protocol=PROTOCOL, model_identity=self.identity,
+                    initialization=dict(self.initialization),
                     response_domain="continuous_vector", response_shape=[1, self.model.config.hidden_size],
                     source_profile=self.slider.identity,
                     target="frozen positive final hidden; identical causal continuation history")
@@ -261,13 +267,15 @@ class ReadoutCritic(nn.Module):
     """Exact shared AudioResponseCritic topology executed through HG/HNDL."""
     score_bound = 0
 
-    def __init__(self, width, condition_width):
+    def __init__(self, width, condition_width, *, seed=7):
         super().__init__()
         builder, identity = verify_sources()
         source = Path(__file__).with_name("readout.hndl").read_text()
-        self.graph = builder(source, input_shape={"response": ["B", width],
-            "condition": ["B", condition_width]}, output_shape=["B", 1])
-        self.identity = dict(identity, readout_sha256=hashlib.sha256(source.encode()).hexdigest())
+        with initialization_rng(seed, "critic"):
+            self.graph = builder(source, input_shape={"response": ["B", width],
+                "condition": ["B", condition_width]}, output_shape=["B", 1])
+        self.identity = dict(identity, readout_sha256=hashlib.sha256(source.encode()).hexdigest(),
+                             initialization_policy=INITIALIZATION_POLICY, initialization_seed=seed)
 
     def extra_repr(self):
         return json.dumps(self.identity, sort_keys=True)

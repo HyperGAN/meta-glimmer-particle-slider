@@ -18,6 +18,21 @@ historical winning formulation. Network graph parity is tested separately.
 The historical loader, trainer, RAW1024 artifacts and distilled PEFT students
 are unchanged and require their original source pins and loaders.
 
+The current cohort is `glimmer-modern-final-hidden-hg-hndl-v2-cpu`, with explicit
+initialization policy `cpu-sha256-component-streams-v1`. The declared run `seed`
+initializes the bank, every named adapter projection, and the critic using
+separate SHA256-derived CPU streams before their random constructors. The
+caller CPU RNG is restored on success and failure. CUDA RNG is neither queried
+nor seeded by this CPU-only policy, so existing CUDA state is untouched and no
+GPU initialization is requested. `model_seed` separately retains the original
+frozen base mapping. The policy and run seed are bound in configuration,
+backend metadata, graph identities and native-only inference specifications.
+
+Earlier v1 packets require their original source revision and initialization
+behavior. They are refused by v2; no checkpoint relabeling or migration occurs.
+The shared loss, bank architecture and frozen positive/neutral hidden-response
+semantics are unchanged.
+
 ## Current admission
 
 Only `mode="cpu-fixture"`, width12, FP32 CPU is admitted. The bundled causal

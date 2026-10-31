@@ -9,7 +9,7 @@ from particle_sliders.pg09 import ConditionalPG09, PG_VERSION, PG_SOURCE_PROFILE
 from particle_sliders.pg09_audio import AudioRow, audio_conditions
 from particle_sliders.response import ResponseBackend, ResponseCapabilities
 
-from . import BACKEND_NAME, PROTOCOL
+from . import BACKEND_NAME, PROTOCOL, INITIALIZATION_POLICY
 from .fixture import TinyGlimmerCPU, make_model
 from .native import Native, ReadoutCritic, validate_ids, model_identity, targets
 from .provenance import verify_sources
@@ -21,6 +21,8 @@ CAPS = ResponseCapabilities("routed_particle_gan", "glimmer_causal_text_hidden",
 
 
 def _configuration(options):
+    if options.get("initialization_policy") != INITIALIZATION_POLICY:
+        raise ValueError("initialization policy differs; retain the original v1 source for old artifacts")
     if options.get("mode") != "cpu-fixture":
         raise ValueError("native/wide Glimmer training awaits central source admission and model qualification")
     if options.get("width", 12) != 12 or options.get("base_precision", "float32") != "float32":
@@ -69,7 +71,8 @@ def read_rows(path):
 
 def validate(options):
     allowed = {"mode", "width", "base_precision", "model_seed", "data_file", "steps", "batch",
-               "seed", "ema_decay", "pg_version", "pg_source_profile", "penalty_input_domain"}
+               "seed", "ema_decay", "pg_version", "pg_source_profile", "penalty_input_domain",
+               "initialization_policy"}
     if set(options) - allowed:
         raise ValueError("unknown modern options")
     _configuration(options)
@@ -99,16 +102,18 @@ def preflight(options, request, staged):
 
 def prepare(options, *, model=None):
     rows = read_rows(options["data_file"])
-    native = Native(_model(options, model))
+    seed = options.get("seed", 7)
+    native = Native(_model(options, model), seed=seed)
     try:
         prepared = {key: [native.backend.prepare(row) for row in values] for key, values in rows.items()}
         conditions = audio_conditions(prepared["train"])
-        critic = ReadoutCritic(12, conditions.shape[1])
+        critic = ReadoutCritic(12, conditions.shape[1], seed=seed)
         game = ConditionalPG09(native, prepared["train"], critic, conditions=conditions,
             particles=native.slider.particles, response_domain="continuous_vector",
             total_steps=options.get("steps", 4), batch_size=options.get("batch", 2),
             seed=options.get("seed", 7), pg_source_profile=PG_SOURCE_PROFILE)
-        configuration = dict(mode="cpu-fixture", width=12, model_seed=options.get("model_seed", 41))
+        configuration = dict(mode="cpu-fixture", width=12, model_seed=options.get("model_seed", 41),
+                             seed=seed, initialization_policy=INITIALIZATION_POLICY)
         spec = INFERENCE.specification(native, model_identity=native.identity,
             protocol=PROTOCOL, configuration=configuration)
         identity = dict(protocol="paired-text-held-out-v1", sha256=hashlib.sha256(
@@ -125,7 +130,7 @@ def prepare(options, *, model=None):
 def validate_inference(options, spec):
     if options:
         raise ValueError("CPU fixture native-only reload requires no training/runtime inputs")
-    if set(spec.configuration) != {"mode", "width", "model_seed"}:
+    if set(spec.configuration) != {"mode", "width", "model_seed", "seed", "initialization_policy"}:
         raise ValueError("native-only fixture construction contract differs")
     _configuration(spec.configuration)
     verify_sources()
@@ -138,7 +143,7 @@ def inference_preflight(options, request, spec):
 
 
 def prepare_inference(options, spec):
-    native = Native(_model(spec.configuration))
+    native = Native(_model(spec.configuration), seed=spec.configuration["seed"])
     try:
         identity = native_identity(native, model_identity=native.identity, protocol=PROTOCOL)
         return InferenceBinding(native.network, identity, native.close,
@@ -156,4 +161,4 @@ INFERENCE = InferenceBackend(BACKEND_NAME, CAPS, prepare_inference, validate_inf
 def cpu_config(data_file, *, steps=4, seed=7, model_seed=41):
     return SessionConfig(BACKEND_NAME, PROTOCOL, mode="cpu-fixture", width=12,
         data_file=str(Path(data_file).resolve()), steps=steps, batch=2, seed=seed,
-        model_seed=model_seed, ema_decay=.8)
+        model_seed=model_seed, ema_decay=.8, initialization_policy=INITIALIZATION_POLICY)

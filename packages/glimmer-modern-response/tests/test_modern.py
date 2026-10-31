@@ -523,3 +523,120 @@ def test_historical_pg82_repository_files_unchanged(name,digest):
     if not (root/'src/glimmer_slider/upstream.py').is_file():
         pytest.skip('historical integrity check requires the source repository alongside the tests')
     assert hashlib.sha256((root/name).read_bytes()).hexdigest()==digest
+
+
+def _caller_cpu_seed(seed):
+    torch.set_rng_state(torch.Generator(device='cpu').manual_seed(seed).get_state())
+
+
+def _forbid_cuda_rng(monkeypatch):
+    def forbidden(*a,**kw):
+        pytest.fail('CPU initialization must not initialize, query or seed CUDA RNG')
+    for name in ('init','_lazy_init','manual_seed','manual_seed_all','get_rng_state',
+                 'get_rng_state_all','set_rng_state','set_rng_state_all'):
+        monkeypatch.setattr(torch.cuda,name,forbidden)
+
+
+def test_initial_game_bytes_independent_of_caller_rng_and_seed_positive_control(config,monkeypatch):
+    from glimmer_modern import INITIALIZATION_POLICY, PROTOCOL
+    _forbid_cuda_rng(monkeypatch)
+    saved=torch.get_rng_state().clone()
+    snapshots=[]
+    try:
+        for caller_seed,run_seed in [(111,7),(222,7),(333,8)]:
+            _caller_cpu_seed(caller_seed)
+            before=torch.get_rng_state().clone()
+            selected=cpu_config(config.options['data_file'],seed=run_seed,model_seed=41)
+            with open_response(selected) as run:
+                native=run.game.backend
+                assert run.config.cohort==PROTOCOL=='glimmer-modern-final-hidden-hg-hndl-v2-cpu'
+                assert native.metadata()['initialization']==dict(policy=INITIALIZATION_POLICY,seed=run_seed)
+                inference_config=run.binding.inference.configuration
+                assert inference_config['initialization_policy']==INITIALIZATION_POLICY
+                assert inference_config['seed']==run_seed
+                snapshots.append(dict(packet=run.checkpoint()['sha256'],
+                    adapter=deepcopy(run.game.network.state_dict()),
+                    bank=native.slider.particles.detach().clone(),
+                    critic=deepcopy(run.game.critic.state_dict()),
+                    base=deepcopy(native.model.state_dict())))
+            assert torch.equal(torch.get_rng_state(),before)
+        a,b,c=snapshots
+        assert a['packet']==b['packet']
+        for key in ('adapter','critic','base'):
+            assert all(torch.equal(value,b[key][name]) for name,value in a[key].items())
+        assert torch.equal(a['bank'],b['bank'])
+        assert not torch.equal(a['bank'],c['bank'])
+        assert any(not torch.equal(value,c['adapter'][name]) for name,value in a['adapter'].items())
+        assert any(not torch.equal(value,c['critic'][name]) for name,value in a['critic'].items())
+        assert all(torch.equal(value,c['base'][name]) for name,value in a['base'].items())
+    finally:
+        torch.set_rng_state(saved)
+
+
+def test_low_level_initialization_scopes_restore_cpu_rng(config,monkeypatch):
+    _forbid_cuda_rng(monkeypatch)
+    saved=torch.get_rng_state().clone()
+    snapshots=[]
+    try:
+        for caller_seed in (444,555):
+            _caller_cpu_seed(caller_seed)
+            before=torch.get_rng_state().clone()
+            native=Native(make_model(41),seed=9)
+            try:
+                critic=ReadoutCritic(12,16,seed=9)
+                snapshots.append((_hash(native.network.state_dict()),_hash(critic.state_dict())))
+            finally:
+                native.close()
+            assert torch.equal(before,torch.get_rng_state())
+        assert snapshots[0]==snapshots[1]
+    finally:
+        torch.set_rng_state(saved)
+
+
+@pytest.mark.parametrize('stage',['bank','projection','critic'])
+def test_failed_random_constructor_restores_caller_rng(monkeypatch,stage):
+    import glimmer_modern.native as product
+    _forbid_cuda_rng(monkeypatch)
+    model=make_model(41).train()
+    original_keys=[set(vars(m)) for m in model.modules()]
+    before=torch.get_rng_state().clone()
+    def fail(*a,**kw):
+        torch.rand(13,device='cpu')
+        raise RuntimeError('random constructor failed')
+    if stage=='bank':
+        monkeypatch.setattr(product.torch,'randn',fail)
+    elif stage=='projection':
+        monkeypatch.setattr(product,'HNDLParticleProjection',fail)
+    else:
+        monkeypatch.setattr(product,'verify_sources',lambda: (fail,{}))
+    with pytest.raises(RuntimeError,match='random constructor failed'):
+        if stage=='critic':
+            ReadoutCritic(12,16,seed=10)
+        else:
+            Native(model,seed=10)
+    assert torch.equal(before,torch.get_rng_state())
+    assert [set(vars(m)) for m in model.modules()]==original_keys
+    assert model.training
+
+
+def test_old_initialization_cohort_rejected_without_relabeling(config,tmp_path,monkeypatch):
+    import glimmer_modern.lifecycle as product
+    from particle_sliders.lifecycle import atomic_save
+    from types import SimpleNamespace
+    old_options=dict(config.options)
+    old_options.pop('initialization_policy')
+    old=SessionConfig(config.backend,'glimmer-modern-final-hidden-hg-hndl-v1-cpu',**old_options)
+    with open_response(config) as run:
+        packet=run.checkpoint()
+    packet['manifest']['config']=old.as_dict()
+    packet['sha256']=_hash({k:v for k,v in packet.items() if k!='sha256'})
+    atomic_save(tmp_path/'old-cohort.pt',packet)
+    def forbidden(*a,**kw):
+        pytest.fail('old initialization cohort reached preparation')
+    monkeypatch.setattr(product,'BACKEND',replace(BACKEND,prepare=forbidden))
+    with pytest.raises(CheckpointError,match='kind/config/cohort'):
+        open_response(config,resume=tmp_path/'old-cohort.pt')
+    with pytest.raises(ValueError,match='initialization policy'):
+        product.BACKEND.open(old)
+    with pytest.raises(ValueError,match='construction contract'):
+        product.validate_inference({},SimpleNamespace(configuration=dict(mode='cpu-fixture',width=12,model_seed=41)))

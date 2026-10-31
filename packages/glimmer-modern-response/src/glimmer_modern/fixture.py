@@ -6,6 +6,8 @@ from types import SimpleNamespace
 import torch
 from torch import nn
 
+from .initialization import initialization_rng
+
 
 class Attention(nn.Module):
     def __init__(self):
@@ -41,6 +43,5 @@ class TinyGlimmerCPU(nn.Module):
 
 
 def make_model(seed):
-    with torch.random.fork_rng(devices=[]):
-        torch.manual_seed(seed)
+    with initialization_rng(seed):
         return TinyGlimmerCPU().eval()
