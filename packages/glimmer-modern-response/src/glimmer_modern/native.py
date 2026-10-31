@@ -16,15 +16,71 @@ from . import PROTOCOL
 from .provenance import verify_sources
 
 TARGET = re.compile(r"model\.language_model\.layers\.(\d+)\.self_attn\.(q_proj|k_proj|v_proj|o_proj)")
+CHECKPOINT_ATTRIBUTES = ("gradient_checkpointing", "_gradient_checkpointing_func")
+CALL_OVERRIDES = ("forward", "_call_impl", "_wrapped_call_impl", "__call__",
+                  "state_dict", "load_state_dict", "named_modules", "modules",
+                  "parameters", "named_parameters", "buffers", "named_buffers",
+                  "train", "eval", "requires_grad_")
+HOOKS = ("_forward_hooks", "_forward_pre_hooks", "_backward_hooks", "_backward_pre_hooks",
+         "_state_dict_hooks", "_state_dict_pre_hooks", "_load_state_dict_pre_hooks",
+         "_load_state_dict_post_hooks")
+
+
+def _native_modules(root):
+    """Inspect the native registration tree without invoking instance overrides."""
+    pending, seen = [("", root)], set()
+    while pending:
+        name, module = pending.pop()
+        if id(module) in seen:
+            continue
+        seen.add(id(module))
+        yield name, module
+        pending.extend((name + "." + child if name else child, value)
+                       for child, value in reversed(tuple(vars(module)["_modules"].items()))
+                       if value is not None)
+
+
+def _restore_attributes(module, names, previous):
+    for name in names:
+        if name in previous:
+            setattr(module, name, previous[name])
+        elif name in vars(module):
+            delattr(module, name)
+
+
+def _native_cleanup(model):
+    # The provisional shared helper captures getattr() values. Preserve raw
+    # instance presence too, so inherited checkpoint attributes stay inherited.
+    attributes = [(module, {key: vars(module)[key] for key in CHECKPOINT_ATTRIBUTES
+                            if key in vars(module)}) for _, module in _native_modules(model)]
+    restore = native_cleanup(model)
+    def close():
+        try:
+            restore()
+        finally:
+            for module, previous in attributes:
+                _restore_attributes(module, CHECKPOINT_ATTRIBUTES, previous)
+    return close
 
 
 def targets(model):
     from .fixture import TinyGlimmerCPU
     if type(model) is not TinyGlimmerCPU or model.config.hidden_size != 12:
         raise ValueError("native/wide Glimmer adapters await central qualification; CPU fixture only")
+    modules = tuple(_native_modules(model))
+    for name, module in modules:
+        if any(key in vars(module) for key in CALL_OVERRIDES) or getattr(module, "_compiled_call_impl", None) is not None:
+            raise ValueError("preexisting native instance override is unsupported: " + name)
+        if any(getattr(module, key, None) for key in HOOKS):
+            raise ValueError("preexisting native module hook is unsupported: " + name)
+        if getattr(module, "gradient_checkpointing", False) or hasattr(module, "_pg09_scale_checkpoint"):
+            raise ValueError("preexisting native checkpoint hook is unsupported: " + name)
+    if any(getattr(p, "_backward_hooks", None) or getattr(p, "_post_accumulate_grad_hooks", None)
+           for p in model.parameters()):
+        raise ValueError("preexisting native parameter hook is unsupported")
     if any(p.device.type != "cpu" or p.dtype != torch.float32 for p in model.parameters()):
         raise ValueError("CPU fixture base must be entirely FP32 CPU")
-    selected = {name: module for name, module in model.named_modules() if TARGET.fullmatch(name)}
+    selected = {name: module for name, module in modules if TARGET.fullmatch(name)}
     layers = {}
     for name, module in selected.items():
         if type(module) is not nn.Linear or module.weight.device.type != "cpu" or module.weight.dtype != torch.float32:
@@ -61,7 +117,7 @@ class Slider(nn.Module):
             self.branches[str(index)] = HNDLParticleProjection(name, module, self.particles,
                 8, 8, builder=builder, identity=identity, attach=False)
         self._targets = selected
-        self._restore = native_cleanup(model)
+        self._restore = _native_cleanup(model)
         self._modes = [(m, m.training) for m in model.modules()]
         self._flags = [(p, p.requires_grad) for p in model.parameters()]
         self.strength = 0.
@@ -70,7 +126,9 @@ class Slider(nn.Module):
         try:
             model.eval().requires_grad_(False)
             for module, branch in zip(selected.values(), self.branches.values()):
-                self._attached.append((module, branch))
+                previous = {key: vars(module)[key] for key in ("forward", "_glimmer_modern")
+                            if key in vars(module)}
+                self._attached.append((module, branch, previous))
                 module.forward = branch.forward
                 object.__setattr__(module, "_glimmer_modern", self)
         except BaseException:
@@ -97,14 +155,13 @@ class Slider(nn.Module):
             return
         first_error = None
         failed = []
-        for module, branch in reversed(self._attached):
+        for module, branch, previous in reversed(self._attached):
             try:
                 if module.forward != branch.forward or getattr(module, "_glimmer_modern", None) is not self:
                     raise RuntimeError("native projection ownership changed during modern session")
-                module.forward = branch.org_forward
-                del module._glimmer_modern
+                _restore_attributes(module, ("forward", "_glimmer_modern"), previous)
             except BaseException as error:
-                failed.append((module, branch))
+                failed.append((module, branch, previous))
                 if first_error is None:
                     first_error = error
         self._attached = list(reversed(failed))
@@ -166,7 +223,7 @@ class Native:
     def observation(self):
         # The common lifecycle owns adapter values/modes and RNG. Native model
         # state and gradients belong to this product, including borrowed models.
-        restore = native_cleanup(self.model)
+        restore = _native_cleanup(self.model)
         buffers = [(b, b.detach().clone()) for b in self.model.buffers()]
         parameters = list(self.model.parameters()) + list(self.network.parameters())
         gradients = [(p, p.requires_grad, p.grad, None if p.grad is None else p.grad.detach().clone())

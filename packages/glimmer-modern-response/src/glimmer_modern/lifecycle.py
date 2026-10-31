@@ -11,7 +11,7 @@ from particle_sliders.response import ResponseBackend, ResponseCapabilities
 
 from . import BACKEND_NAME, PROTOCOL
 from .fixture import TinyGlimmerCPU, make_model
-from .native import Native, ReadoutCritic, validate_ids, model_identity
+from .native import Native, ReadoutCritic, validate_ids, model_identity, targets
 from .provenance import verify_sources
 
 CAPS = ResponseCapabilities("routed_particle_gan", "glimmer_causal_text_hidden",
@@ -80,6 +80,8 @@ def validate(options):
 def _model(options, model=None):
     if model is not None and type(model) is not TinyGlimmerCPU:
         raise ValueError("only the explicit CPU protocol model is admitted; native qualification pending")
+    if model is not None:
+        targets(model)  # Reject hooks/overrides before model_identity invokes state_dict.
     expected = make_model(options.get("model_seed", 41))
     if model is not None and model_identity(model) != model_identity(expected):
         raise ValueError("borrowed fixture base differs from its reconstructible seed identity")

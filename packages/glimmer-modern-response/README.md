@@ -34,6 +34,14 @@ the complete HNDL closure, HyperGAN closure and clean build provenance before
 any native attachment. Final central core admission remains a review blocker;
 updated lifecycle corrections require a new audited lock and CPU receipt.
 
+Borrowed CPU models with existing local module/parameter hooks, instance call
+or serialization overrides, compiled calls or active checkpoint wrappers are
+refused before model hashing or attachment. Cleanup restores original instance
+attribute presence, including inherited forwards and checkpoint attributes.
+These product checks do not provide packet-aware admission: deep packet/source
+and tensor checks may still occur after factory preparation in the provisional
+shared lifecycle. Universal pre-hook refusal is not claimed.
+
 ## CPU use
 
 Create a fresh Python3.11–3.14 environment and install CPU PyTorch from the

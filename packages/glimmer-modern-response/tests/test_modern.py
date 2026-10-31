@@ -1,6 +1,7 @@
 from copy import deepcopy
 from dataclasses import replace
 import importlib.metadata
+import hashlib
 import inspect
 import json
 from pathlib import Path
@@ -413,3 +414,112 @@ def test_low_level_native_width_gate_precedes_source_or_attachment(monkeypatch):
     assert [m.forward for m in targets(model).values()]==forwards
     assert [p.requires_grad for p in model.parameters()]==flags
     assert model.training
+
+
+@pytest.mark.parametrize('failure',[False,True])
+def test_cleanup_restores_instance_attribute_absence(config,monkeypatch,failure):
+    import glimmer_modern.lifecycle as product
+    from glimmer_modern.fixture import Attention
+    # Inherited checkpoint attributes must not become instance shadows when
+    # the provisional shared cleanup writes back its getattr() snapshot.
+    inherited_checkpoint=lambda *a,**kw: None
+    monkeypatch.setattr(Attention,'gradient_checkpointing',False,raising=False)
+    monkeypatch.setattr(Attention,'_gradient_checkpointing_func',inherited_checkpoint,raising=False)
+    model=make_model(41).train()
+    modules=list(model.modules())
+    keys={id(module):set(vars(module)) for module in modules}
+    forwards=[module.forward for module in targets(model).values()]
+    if failure:
+        def fail(*a,**kw):
+            raise RuntimeError('post-attachment failure')
+        monkeypatch.setattr(product,'ReadoutCritic',fail)
+        with pytest.raises(RuntimeError,match='post-attachment'):
+            BACKEND.open(config,model=model)
+    else:
+        with BACKEND.open(config,model=model) as run:
+            run.step()
+            run.evaluate()
+            attention=model.model.language_model.layers[0].self_attn
+            assert 'gradient_checkpointing' not in vars(attention)
+            assert '_gradient_checkpointing_func' not in vars(attention)
+        # Reopening the same borrowed model must remain valid after cleanup.
+        with BACKEND.open(config,model=model):
+            pass
+    assert [module.forward for module in targets(model).values()]==forwards
+    assert all(set(vars(module))==keys[id(module)] for module in modules)
+    assert all('forward' not in vars(module) for module in modules)
+    assert all('_glimmer_modern' not in vars(module) for module in modules)
+
+
+@pytest.mark.parametrize('route',['public','low-level'])
+@pytest.mark.parametrize('kind',[
+    'forward-hook','forward-pre-hook','backward-hook','backward-pre-hook',
+    'state-dict-hook','state-dict-pre-hook','load-state-dict-pre-hook','load-state-dict-post-hook',
+    'parameter-hook','forward-override','call-override','serialization-override',
+    'parameters-override','compiled-call','checkpoint-hook'])
+def test_preexisting_local_hooks_and_instance_overrides_refused_before_mutation(config,monkeypatch,route,kind):
+    model=make_model(41).train()
+    projection=next(iter(targets(model).values()))
+    handles=[]
+    def forbidden(*a,**kw):
+        pytest.fail('preexisting native hook/override executed')
+    if kind=='forward-hook':
+        handles.append(projection.register_forward_hook(forbidden))
+    elif kind=='forward-pre-hook':
+        handles.append(projection.register_forward_pre_hook(forbidden))
+    elif kind=='backward-hook':
+        handles.append(projection.register_full_backward_hook(forbidden))
+    elif kind=='backward-pre-hook':
+        handles.append(projection.register_full_backward_pre_hook(forbidden))
+    elif kind=='state-dict-hook':
+        handles.append(projection.register_state_dict_post_hook(forbidden))
+    elif kind=='state-dict-pre-hook':
+        handles.append(projection.register_state_dict_pre_hook(forbidden))
+    elif kind=='load-state-dict-pre-hook':
+        handles.append(projection.register_load_state_dict_pre_hook(forbidden))
+    elif kind=='load-state-dict-post-hook':
+        handles.append(projection.register_load_state_dict_post_hook(forbidden))
+    elif kind=='parameter-hook':
+        handles.append(projection.weight.register_hook(forbidden))
+    elif kind=='forward-override':
+        projection.forward=forbidden
+    elif kind=='call-override':
+        projection._call_impl=forbidden
+    elif kind=='serialization-override':
+        model.state_dict=forbidden
+    elif kind=='parameters-override':
+        model.parameters=forbidden
+    elif kind=='compiled-call':
+        projection._compiled_call_impl=forbidden
+    else:
+        projection.gradient_checkpointing=True
+    from glimmer_modern.native import _native_modules
+    modules=list(_native_modules(model))
+    snapshots=[(module,dict(vars(module))) for _,module in modules]
+    flags=[p.requires_grad for p in model.embedding.parameters()]
+    rng=torch.get_rng_state().clone()
+    try:
+        with pytest.raises(ValueError,match='preexisting native'):
+            if route=='public':
+                BACKEND.open(config,model=model)
+            else:
+                Native(model)
+        for module,saved in snapshots:
+            assert vars(module).keys()==saved.keys()
+            assert all(vars(module)[key] is value for key,value in saved.items())
+        assert [p.requires_grad for p in model.embedding.parameters()]==flags
+        assert torch.equal(rng,torch.get_rng_state())
+    finally:
+        for handle in handles:
+            handle.remove()
+
+
+@pytest.mark.parametrize('name,digest',[
+    ('src/glimmer_slider/upstream.py','2d53cd8f314f796da8bbe0ffa4d50a6f4fb09dd3018d0fe01d6b18c781f1aee4'),
+    ('src/glimmer_slider/training.py','cc5aeecb7ddc6ede4abd707c8c17279a7f6d0bcdbc54ff4578f09f8d5c23bad0'),
+    ('pyproject.toml','34e4b27439890f29a90a120c7811c8dfc1134ef178e22666be3f475a400b5bf3')])
+def test_historical_pg82_repository_files_unchanged(name,digest):
+    root=Path(__file__).resolve().parents[3]
+    if not (root/'src/glimmer_slider/upstream.py').is_file():
+        pytest.skip('historical integrity check requires the source repository alongside the tests')
+    assert hashlib.sha256((root/name).read_bytes()).hexdigest()==digest
