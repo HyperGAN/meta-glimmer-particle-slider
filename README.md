@@ -2,6 +2,8 @@
 
 Text-tower integration for [Muse Glimmer](https://dev.meta.ai/docs/muse-glimmer), using the original [HyperGAN/particle-sliders](https://github.com/HyperGAN/particle-sliders) ParticleGAN training API. This is a library, local command-line runner and private particle Slider Studio. Model weights and a hosted service are not included.
 
+**Model downloads:** [ntc-ai/glimmer-particle-sliders on Hugging Face](https://huggingface.co/ntc-ai/glimmer-particle-sliders).
+
 ## Particle Slider Studio
 
 ![Particle Slider Studio with independent Thinking, Response and Both controls](docs/assets/slider-studio.jpg)
