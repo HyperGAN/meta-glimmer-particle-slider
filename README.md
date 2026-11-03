@@ -1,5 +1,22 @@
 # Meta Glimmer Particle Slider
 
+## [See the interactive OFF / ON examples →](https://huggingface.co/spaces/ntc-ai/glimmer-particle-sliders)
+
+Choose a slider and compare real saved answers from the same frozen Glimmer base.
+The showcase includes more questions, exact strengths and checkpoints, original
+particle and distilled LoRA downloads, and hover/focus/tap explanations.
+
+**[Open the Glimmer particle-slider showcase](https://huggingface.co/spaces/ntc-ai/glimmer-particle-sliders)** · [Download the adapters](https://huggingface.co/ntc-ai/glimmer-particle-sliders)
+
+[![Live Glimmer showcase: Sleepy at strength 2, with the recorded base OFF answer alongside the sleepy ON answer](docs/assets/showcase-sleepy-alpha2.jpg)](https://huggingface.co/spaces/ntc-ai/glimmer-particle-sliders)
+
+*Sleepy · α2 · raw checkpoint 1024. Click the screenshot to open the examples.*
+
+[![Live Glimmer showcase: Chaotic Texting at strength 2 answering the same leaf question, with the recorded base OFF answer alongside it](docs/assets/showcase-chaotic-alpha2.jpg)](https://huggingface.co/spaces/ntc-ai/glimmer-particle-sliders)
+
+*Chaotic Texting · α2 · raw checkpoint 1024. These are screenshots of saved outputs, not new inference or a factual-accuracy benchmark.*
+
+
 Text-tower integration for [Muse Glimmer](https://dev.meta.ai/docs/muse-glimmer), using the original [HyperGAN/particle-sliders](https://github.com/HyperGAN/particle-sliders) ParticleGAN training API. This is a library, local command-line runner and private particle Slider Studio. Model weights and a hosted service are not included.
 
 **Model downloads:** [ntc-ai/glimmer-particle-sliders on Hugging Face](https://huggingface.co/ntc-ai/glimmer-particle-sliders).
