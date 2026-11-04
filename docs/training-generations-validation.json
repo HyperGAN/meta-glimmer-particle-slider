@@ -59,5 +59,16 @@
     "wheel_tests_passed": 78,
     "sdist_tests_passed": 78,
     "native_qualification_changed": false
+  },
+  "merged_base_target_update": {
+    "source_commit": "52e9accfd5e90b7717bde0a027dfe6efb3f565c3",
+    "core_commit": "ddb41423bcefc1fe76cd94d0f9b367353b3ea137",
+    "evidence": "https://github.com/HyperGAN/glimmer-particle-sliders/blob/52e9accfd5e90b7717bde0a027dfe6efb3f565c3/docs/merged-base-validation.json",
+    "evidence_sha256": "043635810eaa488b710737dbf0e8f7dd0b6e64fa3312a57ddcd57e60ee85969c",
+    "validation_owner": "Standalone Glimmer follow-up worker; earlier routing/legacy receipts remain unchanged.",
+    "wheel_tests_passed": 80,
+    "sdist_tests_passed": 80,
+    "unified_execution": "plan/check, partial2 updates, periodic checkpoints, exact resume4, exports/evaluate/inference passed",
+    "native_qualification_changed": false
   }
 }

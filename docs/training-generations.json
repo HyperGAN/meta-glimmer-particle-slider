@@ -4,14 +4,14 @@
     "installation": "standalone-only; do not co-install the historical distribution",
     "namespace": "glimmer_modern",
     "repository": "https://github.com/HyperGAN/glimmer-particle-sliders.git",
-    "commit": "7ae8a0033c4810beded3cf3bf489051d41c6489c",
-    "review": "https://github.com/HyperGAN/glimmer-particle-sliders/pull/1",
+    "commit": "52e9accfd5e90b7717bde0a027dfe6efb3f565c3",
+    "review": "https://github.com/HyperGAN/glimmer-particle-sliders/pull/2",
     "distribution": "meta-glimmer-modern-response",
     "particlegan_version": "0.9.4",
-    "core_commit": "8ffca928550f97fdb9713151ca3023fc71e77e2c",
+    "core_commit": "ddb41423bcefc1fe76cd94d0f9b367353b3ea137",
     "cohort": "glimmer-modern-final-hidden-hg-hndl-v3-cpu",
     "qualification": "width-12 FP32 CPU protocol fixture only; native Glimmer unqualified",
-    "verification": "https://github.com/HyperGAN/glimmer-particle-sliders/blob/7ae8a0033c4810beded3cf3bf489051d41c6489c/docs/pg094-validation.json"
+    "verification": "https://github.com/HyperGAN/glimmer-particle-sliders/blob/52e9accfd5e90b7717bde0a027dfe6efb3f565c3/docs/merged-base-validation.json"
   },
   "historical": {
     "install_extra": "legacy",

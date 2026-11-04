@@ -28,7 +28,7 @@ environment: the modern product's package-isolation contract requires the
 python -m venv .venv-modern
 . .venv-modern/bin/activate
 python -m pip install --index-url https://download.pytorch.org/whl/cpu 'torch>=2.6,<3'
-python -m pip install 'meta-glimmer-modern-response @ git+https://github.com/HyperGAN/glimmer-particle-sliders.git@7ae8a0033c4810beded3cf3bf489051d41c6489c'
+python -m pip install 'meta-glimmer-modern-response @ git+https://github.com/HyperGAN/glimmer-particle-sliders.git@52e9accfd5e90b7717bde0a027dfe6efb3f565c3'
 python -m pip check
 ```
 
@@ -117,4 +117,4 @@ PG82 packets. Resume an old job with its original source and environment.
 Training equivalent controls with the current objective requires a separately
 qualified new run; updating source does not update existing weights.
 
-The current target pins corrected core `8ffca928550f97fdb9713151ca3023fc71e77e2c`. Its [upstream installed-package receipt](https://github.com/HyperGAN/glimmer-particle-sliders/blob/7ae8a0033c4810beded3cf3bf489051d41c6489c/docs/pg094-validation.json) records 78 wheel and 78 sdist checks plus the shared CLI smoke. The earlier routing validation remains tied to its original source; it is not relabeled.
+The current target pins corrected core `ddb41423bcefc1fe76cd94d0f9b367353b3ea137`. Its [upstream installed-package receipt](https://github.com/HyperGAN/glimmer-particle-sliders/blob/52e9accfd5e90b7717bde0a027dfe6efb3f565c3/docs/merged-base-validation.json) records 80 wheel and 80 sdist checks plus the shared CLI smoke. The earlier routing validation remains tied to its original source; it is not relabeled.
