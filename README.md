@@ -7,9 +7,12 @@ fresh environment and use the `glimmer_modern` shared-response API described in
 [the current training guide](docs/training-generations.md). This reuses the
 [extracted modern Glimmer implementation](https://github.com/HyperGAN/glimmer-particle-sliders/pull/1)
 at an immutable source revision; this repository does not copy its GAN code.
-This historical repository is superseded for new training. The current modern
-implementation admits its width-12 CPU protocol fixture
-only. Native Glimmer training and text generation remain unqualified.
+This historical repository is superseded for new training. The default modern
+route below admits its width-12 CPU protocol fixture only. A separate
+[standalone native NF4 handoff](docs/native-nf4-handoff.md) now records measured
+pretrained update/resume and numerical-response mechanics. Its learning-rate
+search is pending; native language quality and public text rendering remain
+unqualified. The default CPU route and historical PG82 installation stay separate.
 
 The `glimmer_slider` commands, showcase and 20 published controls below are
 the **historical PG82 generation**. To reproduce those runs or load their

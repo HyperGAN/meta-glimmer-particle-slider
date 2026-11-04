@@ -1,0 +1,168 @@
+{
+  "schema": "meta-glimmer-standalone-native-NF4-handoff-v1",
+  "recorded_UTC": "2026-11-04T16:29:46.150234+00:00",
+  "scope": "Documentation of a separate measured standalone cohort; no runtime/default/pin/weights changes in this repository.",
+  "standalone": {
+    "repository": "https://github.com/HyperGAN/glimmer-particle-sliders",
+    "product_commit": "42d1262b2366ae9be827e7ec0de55740294fc0c9",
+    "runtime_source_commit": "74cf323c8111833142a9cd48aaf75778cdcdce9e",
+    "subdirectory": "native-candidate",
+    "distribution": "glimmer-native-response-candidate",
+    "namespace": "glimmer_native",
+    "backend": "glimmer-native",
+    "core_commit": "5d68473a098801ee1ab3ebbb12463daef51c6346",
+    "ParticleGAN_commit": "801ae1ead8f88b88eca8f5398137e3e1bc01ad36",
+    "PG_source_profile": "source-801ae1e-continuous-v1",
+    "penalty_input_domain": "continuous",
+    "native_numerical_profile": "glimmer-native-eager-bf16-strict-v1",
+    "model": "meta-models/Muse-Glimmer-30B",
+    "model_revision": "a4e59da52a7bc87ae7251dd5545c0dd437c44b68",
+    "native_width": 6656,
+    "text_layers": 52,
+    "attention_projections": 208,
+    "particles": [
+      128,
+      4
+    ]
+  },
+  "runtime": {
+    "python": "3.12",
+    "torch_actual": "2.9.1+cu128",
+    "Transformers": "5.22.1",
+    "bitsandbytes": "0.50.2",
+    "base": "single-device NF4 with BF16 storage/compute and double quantization; native attention eager",
+    "strict_policy": {
+      "profile": "glimmer-native-eager-bf16-strict-v1",
+      "actual_flags": {
+        "deterministic_algorithms": true,
+        "deterministic_warn_only": false,
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "tf32_matmul": false,
+        "tf32_cudnn": false,
+        "float32_matmul_precision": "highest",
+        "fp16_reduced_precision_reduction": false,
+        "bf16_reduced_precision_reduction": false,
+        "flash_sdp": false,
+        "memory_efficient_sdp": false,
+        "cudnn_sdp": false,
+        "math_sdp": true,
+        "math_sdp_low_precision_reduction": false,
+        "cublas_workspace_config": ":4096:8"
+      },
+      "environment_overrides": {
+        "TORCH_ALLOW_TF32_CUBLAS_OVERRIDE": null,
+        "NVIDIA_TF32_OVERRIDE": null
+      },
+      "attention": "eager for native text and vision",
+      "base_precision": "bfloat16",
+      "loader_initialization": {
+        "seed": 41,
+        "scope": "CPU default generator and only owned visible cuda:0"
+      }
+    }
+  },
+  "measured_mechanics": {
+    "unique_training_updates": 2,
+    "fresh_process_full2_vs1plus1_exact": true,
+    "complete_final_packet_sha256": "ccf8421841fd66917bd8d4e6857c5065654def4c46786a19cd646539f7bfcb3a",
+    "actual_initial_and_teacher_cache_equal": true,
+    "frozen_packed_host_exact": true,
+    "changed_bank_values": 512,
+    "actual_nonbank_generator_and_critic_movement": true,
+    "OFF_unhooked_native_hidden_logits_and_eight_greedy_tokens_exact": true,
+    "raw_and_explicit_diagnostic_EMA_portable_numerical_response_exact": true,
+    "native_only_inference_training_constructors_forbidden": true,
+    "actual_proof_optimizer_groups": {
+      "g": [
+        {
+          "lr": 0.012,
+          "owns_bank": false,
+          "parameters": 3744
+        },
+        {
+          "lr": 0.03,
+          "owns_bank": true,
+          "parameters": 1
+        }
+      ],
+      "d": [
+        {
+          "lr": 0.018000000000000002,
+          "parameters": 4
+        }
+      ]
+    },
+    "proof_EMA": {
+      "explicit_diagnostic_decay": 0.9,
+      "default_decay": null
+    },
+    "native_model_or_training_run_performed_for_this_documentation_change": false
+  },
+  "campaign_receipts": {
+    "full2": {
+      "campaign_artifact": "native-nf4-proof-v2/full2/report.json",
+      "sha256": "94df78c0c77ba85d60524d7b5e888aa481effa43cbf300b5e61d53efea3ebde0",
+      "status": "passed",
+      "source_commit": "42d1262b2366ae9be827e7ec0de55740294fc0c9",
+      "completed_steps": 2
+    },
+    "fresh1plus1": {
+      "campaign_artifact": "native-nf4-proof-v2/resumed2/report.json",
+      "sha256": "63ee71e8c871147af899d42b58e3269c5b8ea5d7711cf331385563d692117cb9",
+      "status": "passed",
+      "source_commit": "42d1262b2366ae9be827e7ec0de55740294fc0c9",
+      "completed_steps": 2
+    },
+    "raw_numerical_response_recovery": {
+      "campaign_artifact": "native-nf4-inference-recovery-v1/raw/report.json",
+      "sha256": "8a93c4131fa628e823aaae68e5ab3e7918d1d53791e0557ba31b18cb54029c44",
+      "status": "passed",
+      "source_commit": "42d1262b2366ae9be827e7ec0de55740294fc0c9",
+      "completed_steps": 2
+    },
+    "explicit_diagnostic_EMA_response_recovery": {
+      "campaign_artifact": "native-nf4-inference-recovery-v1/ema/report.json",
+      "sha256": "2052eff758380f5479f8d326422d7533a0aa6af5c954fae60e6d28c6ff91211d",
+      "status": "passed",
+      "source_commit": "42d1262b2366ae9be827e7ec0de55740294fc0c9",
+      "completed_steps": 2
+    }
+  },
+  "evidence_availability": "Report SHA256 values identify retained local campaign receipts. Large checkpoints/model outputs are not published by this documentation change; this summary is not an independently downloadable reproduction bundle.",
+  "preserved_routes": {
+    "default_CPU_commit": "0b10e8cacf6aeefc86a4106c0544d4089a576bd6",
+    "default_CPU_core_commit": "ddb41423bcefc1fe76cd94d0f9b367353b3ea137",
+    "default_CPU_profile": "release-0.9.4/auto",
+    "historical_ParticleGAN_commit": "82b72661c03377f348ccb76de37cd4ca02d45a8d",
+    "historical_upstream_commit": "1f5b380d317b73779a8aeab63b6bec0093c2c65c",
+    "published_PG82_controls": 20,
+    "weight_conversion": false
+  },
+  "G32_search": {
+    "status": "prepared and pending; no GPU search results or tuned rate",
+    "scientific_plan_sha256": "7c112dc84a31b65b839cd24d3ea7e84be266d3114393c09ac031189b63d5aa55",
+    "generator_rates": [
+      0.0001,
+      0.001,
+      0.012,
+      0.036
+    ],
+    "updates_per_candidate": 32,
+    "common_schedule_horizon": 128,
+    "actual_common_D": 0.018000000000000002,
+    "actual_common_bank": 0.029999999999999995,
+    "EMA": null,
+    "raw_primary": true,
+    "separate_scientific_cohort_from_two_update_proof": true,
+    "final_confirmation_pairs": 4,
+    "final_confirmation": "sealed-unencoded-unforwarded",
+    "automatic_nomination": false
+  },
+  "limits": [
+    "Mechanical source-qualified native proof only, not semantic steering or learning-rate qualification.",
+    "Public render API and production text generation are unqualified; numerical response recovery used an external audited native-readout probe.",
+    "Eight greedy tokens establish exact readout replay, not a useful final answer or benchmark.",
+    "Single-device no-offload cohort only; no multimodal training, other precision/device/source transfer or historical weight conversion."
+  ]
+}
