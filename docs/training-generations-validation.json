@@ -1,0 +1,74 @@
+{
+  "schema": "glimmer-training-routing-validation-v1",
+  "date": "2026-11-04",
+  "base_commit": "d023deaecff2ec46dd7026f6f13a15aedf296c2e",
+  "scope": "Source routing and separate environment installation; no pretrained native model or artifact retraining",
+  "modern": {
+    "source_commit": "9a3545e5f1c943eed060d5c748a31dd2e1bdcfd3",
+    "core_commit": "a794e3b4a8813b012f2c4faa3da82b78d4a90214",
+    "python": "3.11.17",
+    "torch": "2.15.0+cpu",
+    "particlegan": "0.9.4",
+    "installation": "Fresh virtualenv without system site packages; CPU PyTorch then documented standalone VCS install with test extra",
+    "tests": {
+      "command": "CUDA_VISIBLE_DEVICES='' PYTHONDONTWRITEBYTECODE=1 .venv-cpu/bin/python -I -m pytest /tmp/meta-glimmer-pg094-tests/tests --import-mode=importlib -q",
+      "source": "git archive of modern source_commit, including source tests and provenance records",
+      "passed": 77,
+      "failed": 0,
+      "summary": "........................................................................ [ 93%]\n.....                                                                    [100%]\n77 passed in 9.76s"
+    },
+    "pip_check": "No broken requirements found.",
+    "documented_example": "Passed four total shared PG094 updates over split resume, held-out evaluation, EMA native-only export and fresh inference; width12; CUDA uninitialized",
+    "namespace_contract": "Historical glimmer_slider absent; complete original standalone test suite retained"
+  },
+  "legacy": {
+    "particlegan_git_commit": "82b72661c03377f348ccb76de37cd4ca02d45a8d",
+    "particlegan_distribution_version": "0.6.0",
+    "upstream_commit": "1f5b380d317b73779a8aeab63b6bec0093c2c65c",
+    "python": "3.11.17",
+    "torch": "2.15.0+cpu",
+    "transformers": "5.22.1",
+    "installation": "Fresh virtualenv without system site packages; CPU PyTorch then .[legacy,test]",
+    "tests": {
+      "command": "CUDA_VISIBLE_DEVICES='' PYTHONDONTWRITEBYTECODE=1 .venv-legacy-cpu/bin/python -m pytest -q --upstream=/tmp/meta-glimmer-pg82-source",
+      "passed": 76,
+      "failed": 0,
+      "warning_count": 34,
+      "warnings": "Existing TorchScript deprecations; no test failures"
+    },
+    "pip_check": "No broken requirements found.",
+    "preserved_sha256": {
+      "src/glimmer_slider/training.py": "cc5aeecb7ddc6ede4abd707c8c17279a7f6d0bcdbc54ff4578f09f8d5c23bad0",
+      "src/glimmer_slider/host.py": "b624e5581cb621294e9ee8230d530d0c8068cb11638f46f50ea001d6241a6bb2",
+      "src/glimmer_slider/storage.py": "76aeb940336f69ea53f0d809c0d3dc47ab2c1086b20bd6ab6c11d899a0290df2",
+      "src/glimmer_slider/__main__.py": "48d591cce9b271c9ef741d3a5408c1a385c01b6311f339839381cb971509d138"
+    }
+  },
+  "metadata": "Built wheel verified: Python>=3.11, bare package does not require ParticleGAN, exact PG82 Git dependency is legacy-extra-only; no modern extra that would violate package isolation",
+  "limits": [
+    "Modern native Glimmer model, GPU training, text generation and quality remain unqualified",
+    "Published20 PG82 RAW1024/PEFT controls are unchanged",
+    "The modern target is an unmerged review candidate, not a released or merged product"
+  ],
+  "modern_target_update": {
+    "source_commit": "7ae8a0033c4810beded3cf3bf489051d41c6489c",
+    "core_commit": "8ffca928550f97fdb9713151ca3023fc71e77e2c",
+    "evidence": "https://github.com/HyperGAN/glimmer-particle-sliders/blob/7ae8a0033c4810beded3cf3bf489051d41c6489c/docs/pg094-validation.json",
+    "evidence_sha256": "d21ab8e4b481f2a0ec8e8bac77774877afc9461a0efcde689073ceef6a835973",
+    "validation_owner": "Standalone Glimmer upgrade worker; original modern and legacy routing results above remain unchanged.",
+    "wheel_tests_passed": 78,
+    "sdist_tests_passed": 78,
+    "native_qualification_changed": false
+  },
+  "merged_base_target_update": {
+    "source_commit": "52e9accfd5e90b7717bde0a027dfe6efb3f565c3",
+    "core_commit": "ddb41423bcefc1fe76cd94d0f9b367353b3ea137",
+    "evidence": "https://github.com/HyperGAN/glimmer-particle-sliders/blob/52e9accfd5e90b7717bde0a027dfe6efb3f565c3/docs/merged-base-validation.json",
+    "evidence_sha256": "043635810eaa488b710737dbf0e8f7dd0b6e64fa3312a57ddcd57e60ee85969c",
+    "validation_owner": "Standalone Glimmer follow-up worker; earlier routing/legacy receipts remain unchanged.",
+    "wheel_tests_passed": 80,
+    "sdist_tests_passed": 80,
+    "unified_execution": "plan/check, partial2 updates, periodic checkpoints, exact resume4, exports/evaluate/inference passed",
+    "native_qualification_changed": false
+  }
+}
