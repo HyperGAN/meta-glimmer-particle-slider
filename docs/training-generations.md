@@ -32,8 +32,8 @@ python -m pip install 'meta-glimmer-modern-response @ git+https://github.com/Hyp
 python -m pip check
 ```
 
-The current source is a review candidate. Installing its exact commit makes it
-reproducible; it does not mean its pull request has been merged or released.
+The exact source commit makes this CPU software cohort reproducible. Its
+validation applies to the recorded source, environment and protocol.
 The product checks the exact Git origin and recursive source/data contents of
 its shared core. Use a fresh environment: an older installation of the same
 core version must not be silently retained.
