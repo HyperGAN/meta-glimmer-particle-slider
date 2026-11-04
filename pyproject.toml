@@ -5,13 +5,14 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "meta-glimmer-particle-slider"
 version = "0.1.0"
-description = "Glimmer host integration for upstream particle-sliders"
+description = "Historical Glimmer integration; current training lives in glimmer-particle-sliders"
 requires-python = ">=3.11"
-dependencies = ["torch>=2.6", "safetensors==0.8.0", "particlegan @ git+https://github.com/255BITS/ParticleGAN.git@82b72661c03377f348ccb76de37cd4ca02d45a8d"]
+dependencies = ["torch>=2.6,<3", "safetensors==0.8.0"]
 
 [project.optional-dependencies]
+legacy = ["particlegan @ git+https://github.com/255BITS/ParticleGAN.git@82b72661c03377f348ccb76de37cd4ca02d45a8d"]
 native = ["transformers>=5.15,<6", "accelerate>=1.10,<2", "bitsandbytes==0.50.2"]
-test = ["pytest>=8,<10"]
+test = ["pytest>=8,<10", "transformers>=5.15,<6"]
 
 [tool.setuptools.packages.find]
 where = ["src"]

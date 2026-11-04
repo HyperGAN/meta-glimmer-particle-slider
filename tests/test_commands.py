@@ -3,11 +3,23 @@ import copy
 import json
 import sys
 
+import pytest
 import torch
 
 from glimmer_slider.__main__ import main
 from glimmer_slider.storage import load_adapter
 from test_pipeline import IDENTITY, TinyCausal
+
+
+def test_missing_historical_dependency_explains_separate_legacy_install(monkeypatch, original_api):
+    from glimmer_slider import upstream
+
+    def missing(name):
+        raise upstream.importlib.metadata.PackageNotFoundError(name)
+
+    monkeypatch.setattr(upstream.importlib.metadata, "distribution", missing)
+    with pytest.raises(RuntimeError, match=r"separate environment.*\[legacy\].*standalone"):
+        upstream.load_upstream(original_api.root)
 
 
 class FixtureTokenizer:

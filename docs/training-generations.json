@@ -1,0 +1,24 @@
+{
+  "schema": "glimmer-training-generations-v1",
+  "modern": {
+    "installation": "standalone-only; do not co-install the historical distribution",
+    "namespace": "glimmer_modern",
+    "repository": "https://github.com/HyperGAN/glimmer-particle-sliders.git",
+    "commit": "9a3545e5f1c943eed060d5c748a31dd2e1bdcfd3",
+    "review": "https://github.com/HyperGAN/glimmer-particle-sliders/pull/1",
+    "distribution": "meta-glimmer-modern-response",
+    "particlegan_version": "0.9.4",
+    "core_commit": "a794e3b4a8813b012f2c4faa3da82b78d4a90214",
+    "cohort": "glimmer-modern-final-hidden-hg-hndl-v3-cpu",
+    "qualification": "width-12 FP32 CPU protocol fixture only; native Glimmer unqualified"
+  },
+  "historical": {
+    "install_extra": "legacy",
+    "namespace": "glimmer_slider",
+    "particlegan_commit": "82b72661c03377f348ccb76de37cd4ca02d45a8d",
+    "upstream_commit": "1f5b380d317b73779a8aeab63b6bec0093c2c65c",
+    "published_controls": 20,
+    "weights_repository": "https://huggingface.co/ntc-ai/glimmer-particle-sliders",
+    "migration": "Retain original loaders and recipes; no weight conversion or numerical equivalence claim"
+  }
+}

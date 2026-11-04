@@ -44,7 +44,15 @@ def load_upstream(checkout):
     for name, digest in CORE_FILES.items():
         if hashlib.sha256((core_root / "particle_sliders" / (name + ".py")).read_bytes()).hexdigest() != digest:
             raise ValueError(f"Modified upstream core: {name}")
-    dependency = importlib.metadata.distribution("particlegan")
+    try:
+        dependency = importlib.metadata.distribution("particlegan")
+    except importlib.metadata.PackageNotFoundError:
+        raise RuntimeError(
+            "Historical PG82 loading requires the legacy extra. In a separate "
+            "environment, install '.[legacy]' from this repository. New "
+            "ParticleGAN 0.9.4 training uses the standalone "
+            "HyperGAN/glimmer-particle-sliders package; see docs/training-generations.md."
+        ) from None
     provenance = json.loads(dependency.read_text("direct_url.json") or "{}")
     if (provenance.get("url") != "https://github.com/255BITS/ParticleGAN.git"
             or provenance.get("vcs_info", {}).get("commit_id") != "82b72661c03377f348ccb76de37cd4ca02d45a8d"):

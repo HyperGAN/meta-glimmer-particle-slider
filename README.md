@@ -1,5 +1,24 @@
 # Meta Glimmer Particle Slider
 
+## Choose the training generation
+
+For new ParticleGAN **0.9.4** work, install the standalone modern package in a
+fresh environment and use the `glimmer_modern` shared-response API described in
+[the current training guide](docs/training-generations.md). This reuses the
+[extracted modern Glimmer implementation](https://github.com/HyperGAN/glimmer-particle-sliders/pull/1)
+at an immutable source revision; this repository does not copy its GAN code.
+This historical repository is superseded for new training. The current modern
+implementation admits its width-12 CPU protocol fixture
+only. Native Glimmer training and text generation remain unqualified.
+
+The `glimmer_slider` commands, showcase and 20 published controls below are
+the **historical PG82 generation**. To reproduce those runs or load their
+RAW1024/PEFT artifacts, install `.[legacy]` in a separate environment. They
+retain their original loader, upstream pins and training recipe; installing
+the modern package does not convert or retrain them. Do not install this
+historical package in a modern environment. A base install here omits the
+historical training engine until the `legacy` extra is selected.
+
 ## [See the interactive OFF / ON examples →](https://huggingface.co/spaces/ntc-ai/glimmer-particle-sliders)
 
 Choose a slider and compare real saved answers from the same frozen Glimmer base.
@@ -17,7 +36,7 @@ particle and distilled LoRA downloads, and hover/focus/tap explanations.
 *Chaotic Texting · α2 · raw checkpoint 1024. These are screenshots of saved outputs, not new inference or a factual-accuracy benchmark.*
 
 
-Text-tower integration for [Muse Glimmer](https://dev.meta.ai/docs/muse-glimmer), using the original [HyperGAN/particle-sliders](https://github.com/HyperGAN/particle-sliders) ParticleGAN training API. This is a library, local command-line runner and private particle Slider Studio. Model weights and a hosted service are not included.
+Historical text-tower integration for [Muse Glimmer](https://dev.meta.ai/docs/muse-glimmer), using the original [HyperGAN/particle-sliders](https://github.com/HyperGAN/particle-sliders) ParticleGAN training API. This is a library, local command-line runner and private particle Slider Studio. Model weights and a hosted service are not included.
 
 **Model downloads:** [ntc-ai/glimmer-particle-sliders on Hugging Face](https://huggingface.co/ntc-ai/glimmer-particle-sliders).
 
@@ -40,7 +59,7 @@ interface. The portable launcher is a draft integration with a [bounded full-mod
 smoke](docs/studio-native-smoke.json); no hosted service or training qualification
 is implied by this PR.
 
-## Installation and CPU tests
+## Historical installation and CPU tests
 
 Use a dedicated environment and a CPU PyTorch installation for the fixture tests:
 
@@ -48,7 +67,7 @@ Use a dedicated environment and a CPU PyTorch installation for the fixture tests
 python -m venv .venv
 . .venv/bin/activate
 pip install torch --index-url https://download.pytorch.org/whl/cpu
-pip install -e '.[test]'
+pip install -e '.[legacy,test]'
 git clone https://github.com/HyperGAN/particle-sliders.git ../particle-sliders
 git -C ../particle-sliders checkout 1f5b380d317b73779a8aeab63b6bec0093c2c65c
 CUDA_VISIBLE_DEVICES='' PYTHONDONTWRITEBYTECODE=1 pytest -q --upstream=../particle-sliders
@@ -56,7 +75,7 @@ CUDA_VISIBLE_DEVICES='' PYTHONDONTWRITEBYTECODE=1 pytest -q --upstream=../partic
 
 The loader checks the upstream commit and SHA256 of all imported algorithm files. It imports the actual upstream source; it cannot fall back to a local objective. The ParticleGAN dependency is pinned to `82b72661c03377f348ccb76de37cd4ca02d45a8d`, matching the core package at that revision. Model-specific upstream trainers with environment side effects are not imported.
 
-## Particle training, sampling and export
+## Historical particle training, sampling and export
 
 Each selected language attention projection uses the same structure as Anima's particle branches:
 
@@ -69,7 +88,7 @@ router width 16; branch width 48; alpha/rank = 8/8 = 1
 
 `RoutedMLP` comes from the core `winning_formulation().bridge()`. It routes each input over all particles with softmax; inference uses the learned bank deterministically. It does not draw a random particle. Strength zero bypasses the entire adapter, including after trained weights are reloaded. Only `model.language_model.layers.N.self_attn.{q_proj,k_proj,v_proj,o_proj}` are selected. Grouped KV widths are read from the real modules. Vision and MLP projections are excluded. Training attaches one concept per run. The private studio can combine compatible raw particle adapters on one resident base without merging weights.
 
-`Trainer.step()` calls upstream `conceptmod.textsliders.particle_bridge_gan.update` directly. This is the upstream full-model prediction callback API, rather than the core feature-only `FormulationGame`, which expects rank-eight features. The adapter bridge and training settings follow the current core stamp: gmix critic (8 tokens, width 48, one layer, four heads, score bound 8), adversarial batch 8, Adam rates G=.0006/D=.0009/particles=.006, betas=(0,.999), particle VIC on 64 particles, EMA=.995. The noise schedule remains the stamp's 1,600-step schedule even when an invocation stops earlier. The original API owns D/G updates and the lazy b_cap penalty. Tests compare its losses, critic, normalization, VIC and penalty numerically with the current core stamp. Anima's model-specific generator learning-rate override and image diffusion data pipeline are not imported.
+`Trainer.step()` calls upstream `conceptmod.textsliders.particle_bridge_gan.update` directly. This is the upstream full-model prediction callback API, rather than the core feature-only `FormulationGame`, which expects rank-eight features. The adapter bridge and training settings follow the pinned historical core stamp: gmix critic (8 tokens, width 48, one layer, four heads, score bound 8), adversarial batch 8, Adam rates G=.0006/D=.0009/particles=.006, betas=(0,.999), particle VIC on 64 particles, EMA=.995. The noise schedule remains the stamp's 1,600-step schedule even when an invocation stops earlier. The original API owns D/G updates and the lazy b_cap penalty. Tests compare its losses, critic, normalization, VIC and penalty numerically with the pinned historical core stamp. Anima's model-specific generator learning-rate override and image diffusion data pipeline are not imported.
 
 For the causal language host, fixed paired prompts share exactly the same continuation token IDs. Let `h+` be the frozen positive final hidden state and `hθ` the adapted neutral final hidden state at that history. The upstream paired-edit normalization gives `N`; the real critic input is Gaussian noise `ε`, and the fake input is `ε + N(hθ) - N(h+)`. The upstream relativistic logistic GAN losses and particle VIC remain unchanged. There is **no token KL, supervised reconstruction term, or diffusion timestep surrogate**. Only +1 is trained; negative strength is exposed mathematically but unconstrained by this training recipe.
 
@@ -85,12 +104,12 @@ Portable files validate exact target dimensions, base model ID/revision, tensor 
 
 Distillation captures actual projection inputs and routed bottleneck targets on explicit calibration prompts, then calls the unchanged core `fit_routed_down(..., ridge_fraction=.01)`. As in [Anima's exporter](https://github.com/HyperGAN/anima-particle-sliders/blob/36ad126761056fbb06d6b02574149f0634f50033/release_tools/distill.py), it retains U and fits A with a homogeneous dual ridge solve. This is a data-dependent approximation, not an exact merge of a nonlinear teacher. Calibration defaults to at most 128 rows per projection (hard limit 512); its reported bottleneck RMS is a calibration error, not a held-out quality claim. Evaluate teacher and student on independent prompts before using the student.
 
-## Local Glimmer commands
+## Historical local Glimmer commands
 
 The optional host uses the official open-weight Transformers class and tokenizer. [Meta's model documentation](https://dev.meta.ai/docs/muse-glimmer) identifies Glimmer as a dense 30B multimodal causal transformer with Apache-2.0 weights, text/image input and text output. [The post-training recipe](https://dev.meta.ai/docs/muse-glimmer/post-training) pins `meta-models/Muse-Glimmer-30B` at `a4e59da52a7bc87ae7251dd5545c0dd437c44b68`, and documents LoRA/QLoRA support. That upstream support is distinct from qualification of this integration.
 
 ```bash
-pip install -e '.[native]'
+pip install -e '.[legacy,native]'
 python -m glimmer_slider train --config examples/train.json
 python -m glimmer_slider sample --config examples/sample.json
 python -m glimmer_slider distill --config examples/distill.json
