@@ -70,5 +70,16 @@
     "sdist_tests_passed": 80,
     "unified_execution": "plan/check, partial2 updates, periodic checkpoints, exact resume4, exports/evaluate/inference passed",
     "native_qualification_changed": false
+  },
+  "lr_target_update": {
+    "source_commit": "0b10e8cacf6aeefc86a4106c0544d4089a576bd6",
+    "core_commit": "ddb41423bcefc1fe76cd94d0f9b367353b3ea137",
+    "evidence": "https://github.com/HyperGAN/glimmer-particle-sliders/blob/0b10e8cacf6aeefc86a4106c0544d4089a576bd6/docs/lr-validation.json",
+    "evidence_sha256": "6052bd52c3f9a39738397935ae9e47c8df26e926a3fc37fa72b8403405f5739d",
+    "installed_tests_passed": 103,
+    "package_files": 9,
+    "wheel_sdist_source_parity": true,
+    "native_qualification_changed": false,
+    "earlier_receipts": "Preserved unchanged; LR target is a distinct current source protocol"
   }
 }
