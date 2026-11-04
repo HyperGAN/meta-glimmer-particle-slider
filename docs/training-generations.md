@@ -28,7 +28,7 @@ environment: the modern product's package-isolation contract requires the
 python -m venv .venv-modern
 . .venv-modern/bin/activate
 python -m pip install --index-url https://download.pytorch.org/whl/cpu 'torch>=2.6,<3'
-python -m pip install 'meta-glimmer-modern-response @ git+https://github.com/HyperGAN/glimmer-particle-sliders.git@52e9accfd5e90b7717bde0a027dfe6efb3f565c3'
+python -m pip install 'meta-glimmer-modern-response @ git+https://github.com/HyperGAN/glimmer-particle-sliders.git@0b10e8cacf6aeefc86a4106c0544d4089a576bd6'
 python -m pip check
 ```
 
@@ -117,4 +117,10 @@ PG82 packets. Resume an old job with its original source and environment.
 Training equivalent controls with the current objective requires a separately
 qualified new run; updating source does not update existing weights.
 
-The current target pins corrected core `ddb41423bcefc1fe76cd94d0f9b367353b3ea137`. Its [upstream installed-package receipt](https://github.com/HyperGAN/glimmer-particle-sliders/blob/52e9accfd5e90b7717bde0a027dfe6efb3f565c3/docs/merged-base-validation.json) records 80 wheel and 80 sdist checks plus the shared CLI smoke. The earlier routing validation remains tied to its original source; it is not relabeled.
+The prior v3 target pins corrected core `ddb41423bcefc1fe76cd94d0f9b367353b3ea137`. Its [upstream installed-package receipt](https://github.com/HyperGAN/glimmer-particle-sliders/blob/52e9accfd5e90b7717bde0a027dfe6efb3f565c3/docs/merged-base-validation.json) records 80 wheel and 80 sdist checks plus the shared CLI smoke. The earlier routing validation remains tied to its original source; it is not relabeled.
+
+## Current learning-rate interface
+
+The current standalone target is package 0.1.1 / protocol `glimmer-modern-final-hidden-hg-hndl-v4-lr-cpu`. Pass optional `lr`, `d_lr_mult`, and `prior_lr_mult` in its common session options or `cpu_config` API. G/base defaults to 0.012; D = `lr * d_lr_mult` (default 1.5), routed bank = `lr * prior_lr_mult` (default 2.5). Inputs must be finite positive numbers; booleans are rejected. These remain inherited defaults, not pretrained Glimmer LR calibration. Changed rates require a fresh experiment configuration; full-state resume retains its original recipe.
+
+The [distinct LR validation receipt](https://github.com/HyperGAN/glimmer-particle-sliders/blob/0b10e8cacf6aeefc86a4106c0544d4089a576bd6/docs/lr-validation.json) records 103 installed CPU tests and 9-file source/wheel/sdist parity. Old v3 and earlier routing receipts above remain tied to their original source; historical PG82 controls/weights remain unchanged.
