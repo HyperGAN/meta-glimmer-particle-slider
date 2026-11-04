@@ -49,5 +49,15 @@
     "Modern native Glimmer model, GPU training, text generation and quality remain unqualified",
     "Published20 PG82 RAW1024/PEFT controls are unchanged",
     "The modern target is an unmerged review candidate, not a released or merged product"
-  ]
+  ],
+  "modern_target_update": {
+    "source_commit": "7ae8a0033c4810beded3cf3bf489051d41c6489c",
+    "core_commit": "8ffca928550f97fdb9713151ca3023fc71e77e2c",
+    "evidence": "https://github.com/HyperGAN/glimmer-particle-sliders/blob/7ae8a0033c4810beded3cf3bf489051d41c6489c/docs/pg094-validation.json",
+    "evidence_sha256": "d21ab8e4b481f2a0ec8e8bac77774877afc9461a0efcde689073ceef6a835973",
+    "validation_owner": "Standalone Glimmer upgrade worker; original modern and legacy routing results above remain unchanged.",
+    "wheel_tests_passed": 78,
+    "sdist_tests_passed": 78,
+    "native_qualification_changed": false
+  }
 }
