@@ -1,0 +1,19 @@
+{
+  "schema": "particle-slider-profile-v1",
+  "name": "meta-glimmer-particle-slider-unavailable",
+  "product": "meta-glimmer-particle-slider",
+  "config_kind": "native",
+  "status": "blocked",
+  "reason": "This historical PG82/upstream1f5b380 trainer has no shared lifecycle adapter. Its original native train CLI remains available; a state-preserving universal bridge is not implemented.",
+  "runtime": {
+    "python": "python3"
+  },
+  "capabilities": {
+    "resume": false,
+    "periodic_checkpoint": false,
+    "check": false
+  },
+  "target_steps_path": "steps",
+  "evidence": "README.md",
+  "source_revision": "d023deaecff2ec46dd7026f6f13a15aedf296c2e"
+}
