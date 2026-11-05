@@ -1,27 +1,5 @@
 # Meta Glimmer Particle Slider
 
-## Choose the training generation
-
-For new ParticleGAN **0.9.4** work, install the standalone modern package in a
-fresh environment and use the `glimmer_modern` shared-response API described in
-[the current training guide](docs/training-generations.md). This reuses the
-[extracted modern Glimmer implementation](https://github.com/HyperGAN/glimmer-particle-sliders/pull/1)
-at an immutable source revision; this repository does not copy its GAN code.
-This historical repository is superseded for new training. The default modern
-route below admits its width-12 CPU protocol fixture only. A separate
-[standalone native NF4 handoff](docs/native-nf4-handoff.md) now records measured
-pretrained update/resume and numerical-response mechanics. Its learning-rate
-search is pending; native language quality and public text rendering remain
-unqualified. The default CPU route and historical PG82 installation stay separate.
-
-The `glimmer_slider` commands, showcase and 20 published controls below are
-the **historical PG82 generation**. To reproduce those runs or load their
-RAW1024/PEFT artifacts, install `.[legacy]` in a separate environment. They
-retain their original loader, upstream pins and training recipe; installing
-the modern package does not convert or retrain them. Do not install this
-historical package in a modern environment. A base install here omits the
-historical training engine until the `legacy` extra is selected.
-
 ## [See the interactive OFF / ON examples →](https://huggingface.co/spaces/ntc-ai/glimmer-particle-sliders)
 
 Choose a slider and compare real saved answers from the same frozen Glimmer base.
@@ -133,3 +111,26 @@ CPU tests exercise real upstream updates through a synthetic causal model with g
 ## Attribution
 
 Code is MIT licensed; see [LICENSE](LICENSE) and [NOTICE.md](NOTICE.md). Upstream algorithms are executed from the pinned dependency, not republished as independently originated algorithms. Model weights retain their separate Apache-2.0 license and are not included.
+
+## Choose the training generation
+
+For new ParticleGAN **0.9.4** work, install the standalone modern package in a
+fresh environment and use the `glimmer_modern` shared-response API described in
+[the current training guide](docs/training-generations.md). This reuses the
+[extracted modern Glimmer implementation](https://github.com/HyperGAN/glimmer-particle-sliders/pull/1)
+at an immutable source revision; this repository does not copy its GAN code.
+This historical repository is superseded for new training. The default modern
+route admits its width-12 CPU protocol fixture only. A separate
+[standalone native NF4 handoff](docs/native-nf4-handoff.md) now records measured
+pretrained update/resume and numerical-response mechanics. Its learning-rate
+search is pending; native language quality and public text rendering remain
+unqualified. The default CPU route and historical PG82 installation stay separate.
+
+The `glimmer_slider` commands, showcase and 20 published controls above are
+the **historical PG82 generation**. Here PG82 names ParticleGAN source commit
+`82b7266`, not release version 0.8.2. To reproduce those runs or load their
+RAW1024/PEFT artifacts, install `.[legacy]` in a separate environment. They
+retain their original loader, upstream pins and training recipe; installing
+the modern package does not convert or retrain them. Do not install this
+historical package in a modern environment. A base install here omits the
+historical training engine until the `legacy` extra is selected.
