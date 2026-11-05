@@ -4,14 +4,14 @@
     "installation": "standalone-only; do not co-install the historical distribution",
     "namespace": "glimmer_modern",
     "repository": "https://github.com/HyperGAN/glimmer-particle-sliders.git",
-    "commit": "0b10e8cacf6aeefc86a4106c0544d4089a576bd6",
-    "review": "https://github.com/HyperGAN/glimmer-particle-sliders/pull/3",
+    "commit": "bcd39e7467d1b2e02f38f67d9935ab342aaadbda",
+    "review": "https://github.com/HyperGAN/glimmer-particle-sliders/pull/6",
     "distribution": "meta-glimmer-modern-response",
-    "particlegan_version": "0.9.4",
-    "core_commit": "ddb41423bcefc1fe76cd94d0f9b367353b3ea137",
-    "cohort": "glimmer-modern-final-hidden-hg-hndl-v4-lr-cpu",
+    "particlegan_version": "0.9.5",
+    "core_commit": "3dd672a7f9b8c169daef90fd63e4bb42b9ddc423",
+    "cohort": "glimmer-modern-final-hidden-hg-hndl-pg095-v5-cpu",
     "qualification": "width-12 FP32 CPU protocol fixture only; native Glimmer unqualified",
-    "verification": "https://github.com/HyperGAN/glimmer-particle-sliders/blob/0b10e8cacf6aeefc86a4106c0544d4089a576bd6/docs/lr-validation.json",
+    "verification": "https://github.com/HyperGAN/glimmer-particle-sliders/blob/bcd39e7467d1b2e02f38f67d9935ab342aaadbda/docs/pg095-cpu-validation.json",
     "learning_rates": {
       "keys": [
         "lr",
@@ -22,7 +22,9 @@
       "default_d_lr_mult": 1.5,
       "default_prior_lr_mult": 2.5,
       "native_calibrated": false
-    }
+    },
+    "distribution_version": "0.2.0",
+    "fresh_training_required": true
   },
   "historical": {
     "install_extra": "legacy",
@@ -32,5 +34,22 @@
     "published_controls": 20,
     "weights_repository": "https://huggingface.co/ntc-ai/glimmer-particle-sliders",
     "migration": "Retain original loaders and recipes; no weight conversion or numerical equivalence claim"
+  },
+  "native_current": {
+    "repository": "https://github.com/HyperGAN/glimmer-particle-sliders.git",
+    "commit": "bcd39e7467d1b2e02f38f67d9935ab342aaadbda",
+    "subdirectory": "native-candidate",
+    "distribution": "glimmer-native-response-candidate",
+    "distribution_version": "0.2.0",
+    "namespace": "glimmer_native",
+    "core_commit": "3dd672a7f9b8c169daef90fd63e4bb42b9ddc423",
+    "particlegan_version": "0.9.5",
+    "source_profile": "release-0.9.5",
+    "penalty_input_domain": "continuous",
+    "cohort": "glimmer-native6656-nf4-hg-hndl-pg095-continuous-v2",
+    "pretrained_PG095_qualified": false,
+    "native_LR_calibrated": false,
+    "historical_proof": "native-nf4-handoff.json",
+    "fresh_training_required": true
   }
 }

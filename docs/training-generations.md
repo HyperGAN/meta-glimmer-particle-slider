@@ -8,8 +8,8 @@ The modern installation below is pinned to an immutable commit rather than a mov
 branch. [`training-generations.json`](training-generations.json) records the
 exact source and dependency boundary.
 
-The modern factory calls the shared `ConditionalPG09` response lifecycle for
-ParticleGAN 0.9.4, with the official `release-0.9.4` source profile and
+The modern factory calls the shared `ConditionalPG095` response lifecycle for
+ParticleGAN 0.9.5, with the official `release-0.9.5` source profile and
 `bispf_optimized` preset, a real
 shared 128 × 4 particle bank, routed HNDL attention projections and readout
 critic. This repository adds no GAN implementation or substitute objective.
@@ -28,7 +28,7 @@ environment: the modern product's package-isolation contract requires the
 python -m venv .venv-modern
 . .venv-modern/bin/activate
 python -m pip install --index-url https://download.pytorch.org/whl/cpu 'torch>=2.6,<3'
-python -m pip install 'meta-glimmer-modern-response @ git+https://github.com/HyperGAN/glimmer-particle-sliders.git@0b10e8cacf6aeefc86a4106c0544d4089a576bd6'
+python -m pip install 'meta-glimmer-modern-response @ git+https://github.com/HyperGAN/glimmer-particle-sliders.git@bcd39e7467d1b2e02f38f67d9935ab342aaadbda'
 python -m pip check
 ```
 
@@ -38,7 +38,7 @@ The product checks the exact Git origin and recursive source/data contents of
 its shared core. Use a fresh environment: an older installation of the same
 core version must not be silently retained.
 
-This bounded example exercises the actual shared PG0.9.4 update, continuation,
+This bounded example exercises the actual shared PG0.9.5 update, continuation,
 and inference APIs without loading Glimmer weights:
 
 ```python
@@ -105,14 +105,14 @@ historical. Add `native` to the legacy extras only for their original optional
 host dependencies. Their existing model admission rules still apply.
 
 Keep the packages in different environments. The modern distribution requires
-ParticleGAN 0.9.4 through the shared core; this repository's `legacy` extra
+ParticleGAN 0.9.5 through the shared core; this repository's `legacy` extra
 requires the exact PG82 Git source. A bare installation here omits PG82 and
 cannot train or load historical controls until `legacy` is selected. It does
 not install the modern distribution. Existing environments created before
 this split remain reproducible at their original source commit; new legacy
 installs must select the `legacy` extra explicitly.
 
-The current modern cohort refuses earlier v1/v2 modern packets and historical
+The current modern cohort refuses earlier v1/v2/v3/v4 modern packets and historical
 PG82 packets. Resume an old job with its original source and environment.
 Training equivalent controls with the current objective requires a separately
 qualified new run; updating source does not update existing weights.
@@ -121,6 +121,12 @@ The prior v3 target pins corrected core `ddb41423bcefc1fe76cd94d0f9b367353b3ea13
 
 ## Current learning-rate interface
 
-The current standalone target is package 0.1.1 / protocol `glimmer-modern-final-hidden-hg-hndl-v4-lr-cpu`. Pass optional `lr`, `d_lr_mult`, and `prior_lr_mult` in its common session options or `cpu_config` API. G/base defaults to 0.012; D = `lr * d_lr_mult` (default 1.5), routed bank = `lr * prior_lr_mult` (default 2.5). Inputs must be finite positive numbers; booleans are rejected. These remain inherited defaults, not pretrained Glimmer LR calibration. Changed rates require a fresh experiment configuration; full-state resume retains its original recipe.
+The current standalone target is package 0.2.0 / protocol `glimmer-modern-final-hidden-hg-hndl-pg095-v5-cpu`. Pass optional `lr`, `d_lr_mult`, and `prior_lr_mult` in its common session options or `cpu_config` API. G/base defaults to 0.012; D = `lr * d_lr_mult` (default 1.5), routed bank = `lr * prior_lr_mult` (default 2.5). Inputs must be finite positive numbers; booleans are rejected. These remain inherited defaults, not pretrained Glimmer LR calibration. Changed rates require a fresh experiment configuration; full-state resume retains its original recipe.
 
-The [distinct LR validation receipt](https://github.com/HyperGAN/glimmer-particle-sliders/blob/0b10e8cacf6aeefc86a4106c0544d4089a576bd6/docs/lr-validation.json) records 103 installed CPU tests and 9-file source/wheel/sdist parity. Old v3 and earlier routing receipts above remain tied to their original source; historical PG82 controls/weights remain unchanged.
+The historical PG0.9.4 [distinct LR validation receipt](https://github.com/HyperGAN/glimmer-particle-sliders/blob/0b10e8cacf6aeefc86a4106c0544d4089a576bd6/docs/lr-validation.json) records 103 installed CPU tests and 9-file source/wheel/sdist parity. Old v3 and earlier routing receipts above remain tied to their original source; historical PG82 controls/weights remain unchanged.
+
+## Current PG0.9.5 source
+
+Both standalone packages pin core **0.13.0** at `3dd672a7f9b8c169daef90fd63e4bb42b9ddc423`. The [new validation receipt](https://github.com/HyperGAN/glimmer-particle-sliders/blob/bcd39e7467d1b2e02f38f67d9935ab342aaadbda/docs/pg095-cpu-validation.json) records 103 installed CPU fixture and 75 native CPU checks, wheel/sdist/installed source parity and the exact 577-file core inventory. These checks load no pretrained weights. The [native guide](native-nf4-handoff.md) points to the separate native package; its earlier PG801 proof remains historical. New training requires fresh source/cohort identities.
+
+Select and independently confirm rates with held-out RAW FP64 equal-example pooled relative SSE as the sole metric. Preservation and media observations are optional diagnostics. No PG0.9.5 native rate is calibrated yet. [Previous guide and source metadata](history/pre-pg095/training-generations.md) retain the prior pins.

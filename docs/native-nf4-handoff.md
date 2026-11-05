@@ -1,12 +1,25 @@
-# Standalone native NF4 handoff
+# Current standalone native Glimmer training
 
-New native Glimmer experiments belong to the separate standalone
+New experiments use the separate [native package at `bcd39e7`](https://github.com/HyperGAN/glimmer-particle-sliders/tree/bcd39e7467d1b2e02f38f67d9935ab342aaadbda/native-candidate), version **0.2.0**, shared core **0.13.0** at `3dd672a7f9b8c169daef90fd63e4bb42b9ddc423` and published **ParticleGAN 0.9.5**. Use a fresh Python 3.12 environment with the pinned Torch 2.9.1+cu128 numerical stack:
+
+```sh
+python -m pip install 'glimmer-native-response-candidate @ git+https://github.com/HyperGAN/glimmer-particle-sliders.git@bcd39e7467d1b2e02f38f67d9935ab342aaadbda#subdirectory=native-candidate'
+python -m pip check
+```
+
+The namespace remains `glimmer_native`; select `release-0.9.5` and `continuous` explicitly. The new protocol is `glimmer-native6656-nf4-hg-hndl-pg095-continuous-v2`. Model revision, 6656-wide native response, NF4/BF16 policy and resource admission remain fixed. This source has passed 75 CPU checks; pretrained PG0.9.5 update/resume and LR qualification remain pending. Start fresh cohorts and output paths. Earlier packets cannot be resumed under the new core.
+
+The [CPU route](training-generations.md) uses its own new width-12 fixture cohort. The showcase and 20 published PG82 controls keep their original historical environment. The receipt below retains its actual PG801 proof identity and is not PG0.9.5 qualification. RAW FP64 equal-example pooled relative SSE is the sole LR ranking/confirmation metric; preservation and media are diagnostic only.
+
+# Historical PG801 native NF4 proof
+
+The earlier native Glimmer experiments belong to the separate standalone
 [`native-candidate` subproject at `42d1262`](https://github.com/HyperGAN/glimmer-particle-sliders/tree/42d1262b2366ae9be827e7ec0de55740294fc0c9/native-candidate).
 That exact installed source has passed a bounded pretrained update/resume and
 numerical-response proof. It has no qualified learning rate or semantic steering
-recommendation. The prepared G32 search remains pending.
+recommendation. The old prepared G32 search was superseded by the PG0.9.5 cutover.
 
-The default [CPU training guide](training-generations.md) continues to pin
+At the time of this proof, the default CPU training guide pinned
 `0b10e8cacf6aeefc86a4106c0544d4089a576bd6`, official PG 0.9.4 and core `ddb4142`.
 The historical `glimmer_slider` commands and 20 published controls retain PG82
 and their original loaders. Keep all three environments separate. This handoff
@@ -67,7 +80,7 @@ it does not qualify the public render API. The eight-token check establishes num
 replay; language quality remains unqualified. Multimodal training and
 historical artifact compatibility were not established.
 
-Standalone Glimmer owns the pending matched search: G 0.0001/0.001/0.012/0.036,
+The superseded PG801 matched-search plan was: G 0.0001/0.001/0.012/0.036,
 32 updates each on a common 128 schedule, raw selection and EMA disabled. Its
 actual common D is 0.018000000000000002 and bank rate 0.029999999999999995; this
 is a distinct frozen cohort from the two-update proof. LR selection and independent
