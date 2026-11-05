@@ -41,6 +41,11 @@ core version must not be silently retained.
 This bounded example exercises the actual shared PG0.9.5 update, continuation,
 and inference APIs without loading Glimmer weights:
 
+New runs explicitly use `ema_decay=None` and evaluate/export/infer with RAW only.
+The pinned helper supplies an EMA setting, so this example replaces it through
+the public `SessionConfig` options before any session is opened. No EMA or
+averaging comparison is part of the current recipe.
+
 ```python
 import json
 from pathlib import Path
@@ -48,6 +53,7 @@ from pathlib import Path
 import torch
 from glimmer_modern.lifecycle import cpu_config
 from particle_sliders.response import open_response
+from particle_sliders.lifecycle import SessionConfig
 from particle_sliders.inference import open_inference
 
 torch.set_num_threads(1)
@@ -62,16 +68,19 @@ rows = {
     ],
 }
 Path("pairs.json").write_text(json.dumps(rows))
-config = cpu_config("pairs.json")
+fixture = cpu_config("pairs.json")
+# Override the pinned fixture helper's EMA default before opening.
+config = SessionConfig(fixture.backend, "new-modern-pg095-raw-only-v1",
+    **{**fixture.options, "ema_decay": None})
 with open_response(config) as run:
     run.train(stop_after=2)
     run.checkpoint("modern-training.pt")
 with open_response(config, resume="modern-training.pt") as run:
     run.train()
     run.evaluate(split="evaluation", strength=0.5)
-    run.export_inference("modern-ema.pt", selection="ema")
+    run.export_inference("modern-raw.pt", selection="raw")
 with open_inference(
-    "modern-ema.pt", operation="response", native_request={"ids": [1, 3, 6, 7]}
+    "modern-raw.pt", operation="response", native_request={"ids": [1, 3, 6, 7]}
 ) as run:
     response = run.response(ids=[1, 3, 6, 7], strength=0.5)
 ```

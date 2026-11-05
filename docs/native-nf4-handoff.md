@@ -7,6 +7,10 @@ python -m pip install 'glimmer-native-response-candidate @ git+https://github.co
 python -m pip check
 ```
 
+For new training, explicitly set `ema_decay=None`; use RAW evaluation and
+`selection="raw"` export/inference, with no EMA comparison. Historical proof
+receipts below retain their original settings and do not prescribe new runs.
+
 The namespace remains `glimmer_native`; select `release-0.9.5` and `continuous` explicitly. The new protocol is `glimmer-native6656-nf4-hg-hndl-pg095-continuous-v2`. Model revision, 6656-wide native response, NF4/BF16 policy and resource admission remain fixed. This source has passed 75 CPU checks; pretrained PG0.9.5 update/resume and LR qualification remain pending. Start fresh cohorts and output paths. Earlier packets cannot be resumed under the new core.
 
 The [CPU route](training-generations.md) uses its own new width-12 fixture cohort. The showcase and 20 published PG82 controls keep their original historical environment. The receipt below retains its actual PG801 proof identity and is not PG0.9.5 qualification. RAW FP64 equal-example pooled relative SSE is the sole LR ranking/confirmation metric; preservation and media are diagnostic only.

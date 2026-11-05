@@ -51,5 +51,13 @@
     "native_LR_calibrated": false,
     "historical_proof": "native-nf4-handoff.json",
     "fresh_training_required": true
+  },
+  "new_training_policy": {
+    "ema_decay": null,
+    "export_selection": "raw",
+    "evaluation_network": "raw",
+    "inference_network": "raw",
+    "EMA_comparison": false,
+    "scope": "Recommended explicit options for new standalone runs; historical source, recipes, tests and weights unchanged"
   }
 }
