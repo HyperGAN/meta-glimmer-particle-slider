@@ -19,6 +19,11 @@ particle and distilled LoRA downloads, and hover/focus/tap explanations.
 
 Historical text-tower integration for [Muse Glimmer](https://dev.meta.ai/docs/muse-glimmer), using the original [HyperGAN/particle-sliders](https://github.com/HyperGAN/particle-sliders) ParticleGAN training API. This is a library, local command-line runner and private particle Slider Studio. Model weights and a hosted service are not included.
 
+New ParticleGAN training follows the [current standalone routes](docs/training-generations.md):
+set `ema_decay=None` explicitly and use RAW evaluation, export and inference,
+without EMA comparisons. The historical training settings and published weights
+below retain their original recipe for reproduction.
+
 **Model downloads:** [ntc-ai/glimmer-particle-sliders on Hugging Face](https://huggingface.co/ntc-ai/glimmer-particle-sliders).
 
 ## Particle Slider Studio
