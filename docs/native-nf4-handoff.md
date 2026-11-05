@@ -70,9 +70,20 @@ historical artifact compatibility were not established.
 Standalone Glimmer owns the pending matched search: G 0.0001/0.001/0.012/0.036,
 32 updates each on a common 128 schedule, raw selection and EMA disabled. Its
 actual common D is 0.018000000000000002 and bank rate 0.029999999999999995; this
-is a distinct frozen cohort from the two-update proof. The primary metric is
-the equal-example mean relative SSE; held-out controls, actual initialization
-and stochastic identity, native outputs and preservation must accompany it.
+is a distinct frozen cohort from the two-update proof. LR selection and independent
+confirmation use only held-out raw teacher/student relative SSE. Cast student,
+teacher and neutral to FP64 before subtraction, pool positions within each
+example, divide by its teacher-edit energy, then average examples equally.
+Keep the teacher-only valid/excluded set fixed; zero-energy examples remain
+undefined and student failures never remove examples. Compare equal completed
+updates on the same declared schedule horizon.
+
+Actual initialization, stochastic and source/model/data/numerical identity,
+optimizer rates, finite native updates, exact continuation and raw-response replay
+remain correctness checks. Native outputs and preservation are optional
+diagnostics and never select, reject or delay a rate; endpoint net displacement
+is also diagnostic after the native mechanical proof. Follow the
+[common LR protocol](https://github.com/HyperGAN/particle-sliders/blob/main/packages/particle-sliders-core/LEARNING-RATE-CONTRACT.md).
 Four final pairs remain sealed. There is no tuned rate, default change or
 independent meta-Glimmer search to inherit yet.
 
