@@ -1,0 +1,13 @@
+{
+  "schema": "meta-glimmer-pg095-route-validation-v1",
+  "standalone_commit": "bcd39e7467d1b2e02f38f67d9935ab342aaadbda",
+  "core_commit": "3dd672a7f9b8c169daef90fd63e4bb42b9ddc423",
+  "particlegan": "0.9.5",
+  "CPU_guide_example_actual_exit": 0,
+  "CPU_example_executed_against_installed_standalone": true,
+  "showcase_prefix_exact": true,
+  "historical_recipe_metadata_and_native_proof_receipt_unchanged": true,
+  "prior_guides_archived_byte_for_byte": true,
+  "historical_runtime_and_dependencies_unchanged": true,
+  "PG095_pretrained_training_or_calibration": false
+}
