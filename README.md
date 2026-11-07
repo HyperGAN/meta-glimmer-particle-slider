@@ -26,6 +26,22 @@ below retain their original recipe for reproduction.
 
 **Model downloads:** [ntc-ai/glimmer-particle-sliders on Hugging Face](https://huggingface.co/ntc-ai/glimmer-particle-sliders).
 
+## Measured PG0.9.5 native rates
+
+The separate Meta native cohort now has a scoped 128-update recommendation:
+**G `0.00003`, D `0.018000000000000002`, bank `0.029999999999999995`**,
+with model-weight EMA disabled. The previously unused four-example RAW error
+is **`0.2249722810441098`** versus OFF `1.0`; an independent saved-field FP64
+reduction reproduced every example exactly. See the
+[reusable preset and native factory example](docs/measured-native-learning-rates.md)
+and [sanitized measurement](docs/pg095-native-nf4-128-measurement.json).
+
+This measures the pinned Muse-Glimmer-30B NF4/BF16 native6656 response with
+original Meta chat roles, low reasoning and generation-prompt tokenization.
+It is the best tested G with fixed D/bank, not a global or joint optimum or a
+text-quality result. The showcase above and 20 published PG82 controls retain
+their original recipe; they are not relabeled by this new measurement.
+
 ## Particle Slider Studio
 
 ![Particle Slider Studio with independent Thinking, Response and Both controls](docs/assets/slider-studio.jpg)
@@ -128,8 +144,9 @@ This historical repository is superseded for new training. The default modern
 route admits its width-12 CPU protocol fixture only. A separate
 [standalone native NF4 handoff](docs/native-nf4-handoff.md) points to the new
 PG0.9.5 source and retains the earlier PG801 pretrained proof separately.
-The new version requires fresh native training and LR calibration; prior
-measurements do not qualify it. The default CPU route and historical PG82 installation stay separate.
+The current Meta native cohort has a [measured preset](docs/measured-native-learning-rates.md);
+fresh runs and exact historical continuation still require their own complete source/data
+identities. The default CPU route and historical PG82 installation stay separate.
 
 The `glimmer_slider` commands, showcase and 20 published controls above are
 the **historical PG82 generation**. Here PG82 names ParticleGAN source commit

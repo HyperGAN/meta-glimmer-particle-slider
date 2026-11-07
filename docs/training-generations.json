@@ -37,7 +37,7 @@
   },
   "native_current": {
     "repository": "https://github.com/HyperGAN/glimmer-particle-sliders.git",
-    "commit": "bcd39e7467d1b2e02f38f67d9935ab342aaadbda",
+    "commit": "b621a32bced45c6b5466113336bc9962bfa6f18e",
     "subdirectory": "native-candidate",
     "distribution": "glimmer-native-response-candidate",
     "distribution_version": "0.2.0",
@@ -47,10 +47,14 @@
     "source_profile": "release-0.9.5",
     "penalty_input_domain": "continuous",
     "cohort": "glimmer-native6656-nf4-hg-hndl-pg095-continuous-v2",
-    "pretrained_PG095_qualified": false,
-    "native_LR_calibrated": false,
+    "pretrained_PG095_qualified": true,
+    "native_LR_calibrated": true,
     "historical_proof": "native-nf4-handoff.json",
-    "fresh_training_required": true
+    "fresh_training_required": true,
+    "measurement_cohort": "meta-glimmer-cheerful-meta20b-nativebcd39-core3dd-PG095-fresh-h128-v1",
+    "measurement": "pg095-native-nf4-128-measurement.json",
+    "measured_preset": "../presets/meta-pg095-native-nf4-128.json",
+    "scope": "Meta native6656 NF4/BF16 response cohort only; G screen with fixed D/bank, not global/joint optimum or language-quality qualification"
   },
   "new_training_policy": {
     "ema_decay": null,
