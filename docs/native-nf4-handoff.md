@@ -1,19 +1,37 @@
 # Current standalone native Glimmer training
 
-New experiments use the separate [native package at `bcd39e7`](https://github.com/HyperGAN/glimmer-particle-sliders/tree/bcd39e7467d1b2e02f38f67d9935ab342aaadbda/native-candidate), version **0.2.0**, shared core **0.13.0** at `3dd672a7f9b8c169daef90fd63e4bb42b9ddc423` and published **ParticleGAN 0.9.5**. Use a fresh Python 3.12 environment with the pinned Torch 2.9.1+cu128 numerical stack:
+The current Meta PG0.9.5 native cohort has completed exact full-state
+continuation, public RAW/OFF validation and unused-example confirmation.
+Use the [measured Meta preset and factory example](measured-native-learning-rates.md):
+G `0.00003`, D `0.018000000000000002`, bank `0.029999999999999995`,
+128 updates, batch 2, seed 7 and `ema_decay=None`. Its four-example unused RAW
+error is `0.2249722810441098` versus OFF 1.0, independently reproduced from the
+saved fields. This is a scoped response result, not a generated-text claim.
+
+The native implementation is the separate [standalone package at `b621a32`](https://github.com/HyperGAN/glimmer-particle-sliders/tree/b621a32bced45c6b5466113336bc9962bfa6f18e/native-candidate),
+version 0.2.0, shared core 0.13.0 at `3dd672a7f9b8c169daef90fd63e4bb42b9ddc423`
+and published ParticleGAN 0.9.5. Its native package hashes exactly match the
+Meta measurement's operative bytes, including the 20GiB admission profile and
+strict no-EMA checks. Use a fresh Python 3.12 environment with the pinned
+Torch 2.9.1+cu128 numerical stack:
 
 ```sh
-python -m pip install 'glimmer-native-response-candidate @ git+https://github.com/HyperGAN/glimmer-particle-sliders.git@bcd39e7467d1b2e02f38f67d9935ab342aaadbda#subdirectory=native-candidate'
+python -m pip install 'glimmer-native-response-candidate @ git+https://github.com/HyperGAN/glimmer-particle-sliders.git@b621a32bced45c6b5466113336bc9962bfa6f18e#subdirectory=native-candidate'
 python -m pip check
 ```
 
-For new training, explicitly set `ema_decay=None`; use RAW evaluation and
-`selection="raw"` export/inference, with no EMA comparison. Historical proof
-receipts below retain their original settings and do not prescribe new runs.
+The namespace remains `glimmer_native`; the factory fixes `release-0.9.5` /
+`continuous`. The model, native6656 geometry, strict BF16/NF4 numerics and
+original Meta user/system chat roles remain fixed. A live external guardian
+must enforce the 20GiB process cap and 5GiB free reserve, with 25GiB free at
+admission; package installation grants no resource reservation. Exact resume
+requires the original complete SessionConfig, source and data, not this preset
+alone. Full [scope and evidence](pg095-native-nf4-128-measurement.json).
 
-The namespace remains `glimmer_native`; select `release-0.9.5` and `continuous` explicitly. The new protocol is `glimmer-native6656-nf4-hg-hndl-pg095-continuous-v2`. Model revision, 6656-wide native response, NF4/BF16 policy and resource admission remain fixed. This source has passed 75 CPU checks; pretrained PG0.9.5 update/resume and LR qualification remain pending. Start fresh cohorts and output paths. Earlier packets cannot be resumed under the new core.
-
-The [CPU route](training-generations.md) uses its own new width-12 fixture cohort. The showcase and 20 published PG82 controls keep their original historical environment. The receipt below retains its actual PG801 proof identity and is not PG0.9.5 qualification. RAW FP64 equal-example pooled relative SSE is the sole LR ranking/confirmation metric; preservation and media are diagnostic only.
+The [width-12 CPU route](training-generations.md), the 20 published PG82
+controls and the historical PG801 proof below keep their original scopes.
+The following section records the status at that earlier proof boundary;
+its sealed-final and uncalibrated-rate statements are historical.
 
 # Historical PG801 native NF4 proof
 

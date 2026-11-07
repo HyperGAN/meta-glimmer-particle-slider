@@ -13,9 +13,10 @@ ParticleGAN 0.9.5, with the official `release-0.9.5` source profile and
 `bispf_optimized` preset, a real
 shared 128 × 4 particle bank, routed HNDL attention projections and readout
 critic. This repository adds no GAN implementation or substitute objective.
-Only the synthetic width-12, FP32 CPU protocol model is currently admitted.
-Native Glimmer training, 30B weight loading and text-generation quality remain
-unqualified. A CPU fixture checkpoint is not a trained Glimmer text control.
+The default modern distribution admits only its synthetic width-12, FP32 CPU
+protocol model. The separate native package now has a [measured Meta
+PG0.9.5 preset](measured-native-learning-rates.md); generated language quality
+remains unmeasured. A CPU fixture checkpoint is not a trained Glimmer text control.
 
 ## New training destination
 
@@ -138,4 +139,4 @@ The historical PG0.9.4 [distinct LR validation receipt](https://github.com/Hyper
 
 Both standalone packages pin core **0.13.0** at `3dd672a7f9b8c169daef90fd63e4bb42b9ddc423`. The [new validation receipt](https://github.com/HyperGAN/glimmer-particle-sliders/blob/bcd39e7467d1b2e02f38f67d9935ab342aaadbda/docs/pg095-cpu-validation.json) records 103 installed CPU fixture and 75 native CPU checks, wheel/sdist/installed source parity and the exact 577-file core inventory. These checks load no pretrained weights. The [native guide](native-nf4-handoff.md) points to the separate native package; its earlier PG801 proof remains historical. New training requires fresh source/cohort identities.
 
-Select and independently confirm rates with held-out RAW FP64 equal-example pooled relative SSE as the sole metric. Preservation and media observations are optional diagnostics. No PG0.9.5 native rate is calibrated yet. [Previous guide and source metadata](history/pre-pg095/training-generations.md) retain the prior pins.
+Select and independently confirm rates with held-out RAW FP64 equal-example pooled relative SSE as the sole metric. Preservation and media observations are optional diagnostics. The separate Meta native cohort now has an [independently confirmed scoped preset](measured-native-learning-rates.md); this does not qualify the CPU fixture as a pretrained control. [Previous guide and source metadata](history/pre-pg095/training-generations.md) retain the prior pins.
