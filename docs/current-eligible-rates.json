@@ -1,0 +1,383 @@
+{
+  "as_of": "2026-11-09",
+  "selection_metric": "Equal-case intended-effect ON minus exact matched OFF mean; all original scalar values retained.",
+  "catastrophic_check": "Separate qualified catastrophic-only eligibility check, not an effect score. Weak effect is not catastrophic failure; missing/observer error is unmeasured, never a pass or automatic model failure.",
+  "judgment_kind": "categorical",
+  "failure_probability": null,
+  "qualified_media": [
+    "image",
+    "text"
+  ],
+  "audio_qualified": false,
+  "all_product_deployment": false,
+  "new_training_render_effect_rating_or_model_calls_for_this_projection": 0,
+  "package_defaults_changed": false,
+  "weight_EMA": null,
+  "evidence": {
+    "actual_qualification": {
+      "artifact_id": "Root-actual-image-text-qualification-v1.json",
+      "bytes": 16500,
+      "sha256": "f78ec102cebab6651bf694129b706b5d31783ced97bc0bc9c617ccb090df777e"
+    },
+    "actual_bank_result": {
+      "artifact_id": "result.json",
+      "bytes": 110547,
+      "sha256": "e942cfc6973898ab60f39b8bcb1c3e1c251e5cbd9ee388a9683f1a46837c4877"
+    },
+    "actual_bank_terminal": {
+      "artifact_id": "root-actual-terminal-reap-resource0-v1.json",
+      "bytes": 3057,
+      "sha256": "10e623e02e89940cd69ec6ab2239bc87a95f76ee05cc354c5415b4003b0ada85"
+    },
+    "actual_FULL_bound_guard_integration": {
+      "artifact_id": "Root-actual-closed-bank-core-guard-integration.json",
+      "bytes": 4487,
+      "sha256": "4a2df6938f3b07a5c24fd90061e9bcfdace6a61fa0582d0c7ac41d018d6900e4"
+    }
+  },
+  "availability": "Sanitized documentation metadata only. Artifact identifiers, byte counts and hashes identify private retained evidence; they are not download links. RAW/FULL/model/conditioning/runtime and guard state files are not bundled.",
+  "schema": "documented-current-eligible-saved-ties-v1",
+  "product_id": "meta-glimmer-particle-slider",
+  "status": "historical_six_way_zero_tie_with_current_eligible_subset",
+  "rate_overrides": null,
+  "historical_effect_decision": "finished-output-lr-decision.json",
+  "historical_tied_controls": [
+    "cell0",
+    "cell1",
+    "cell2",
+    "cell3",
+    "cell4",
+    "cell5"
+  ],
+  "historical_tied_rate_overrides": [
+    {
+      "lr": 0.0001,
+      "d_lr_mult": 180.0,
+      "prior_lr_mult": 299.99999999999994,
+      "ema_decay": null
+    },
+    {
+      "lr": 0.001,
+      "d_lr_mult": 18.0,
+      "prior_lr_mult": 29.999999999999996,
+      "ema_decay": null
+    },
+    {
+      "lr": 0.012,
+      "d_lr_mult": 1.5,
+      "prior_lr_mult": 2.4999999999999996,
+      "ema_decay": null
+    },
+    {
+      "lr": 0.036,
+      "d_lr_mult": 0.5000000000000001,
+      "prior_lr_mult": 0.8333333333333333,
+      "ema_decay": null
+    },
+    {
+      "lr": 1.0000000000000003e-05,
+      "d_lr_mult": 1799.9999999999998,
+      "prior_lr_mult": 2999.9999999999986,
+      "ema_decay": null
+    },
+    {
+      "lr": 3e-05,
+      "d_lr_mult": 600.0,
+      "prior_lr_mult": 999.9999999999998,
+      "ema_decay": null
+    }
+  ],
+  "all_original_candidate_means": [
+    {
+      "control_id": "cell0",
+      "G": 0.0001,
+      "D": 0.018000000000000002,
+      "bank": 0.029999999999999995,
+      "mean_effect_gain": 0.0
+    },
+    {
+      "control_id": "cell1",
+      "G": 0.001,
+      "D": 0.018000000000000002,
+      "bank": 0.029999999999999995,
+      "mean_effect_gain": 0.0
+    },
+    {
+      "control_id": "cell2",
+      "G": 0.012,
+      "D": 0.018000000000000002,
+      "bank": 0.029999999999999995,
+      "mean_effect_gain": 0.0
+    },
+    {
+      "control_id": "cell3",
+      "G": 0.036,
+      "D": 0.018000000000000002,
+      "bank": 0.029999999999999995,
+      "mean_effect_gain": 0.0
+    },
+    {
+      "control_id": "cell4",
+      "G": 1.0000000000000003e-05,
+      "D": 0.018000000000000002,
+      "bank": 0.029999999999999995,
+      "mean_effect_gain": 0.0
+    },
+    {
+      "control_id": "cell5",
+      "G": 3e-05,
+      "D": 0.018000000000000002,
+      "bank": 0.029999999999999995,
+      "mean_effect_gain": 0.0
+    }
+  ],
+  "current_eligible_tied_controls": [
+    "cell0",
+    "cell1",
+    "cell4"
+  ],
+  "current_eligible_tied_rate_overrides": [
+    {
+      "lr": 0.0001,
+      "d_lr_mult": 180.0,
+      "prior_lr_mult": 299.99999999999994,
+      "ema_decay": null
+    },
+    {
+      "lr": 0.001,
+      "d_lr_mult": 18.0,
+      "prior_lr_mult": 29.999999999999996,
+      "ema_decay": null
+    },
+    {
+      "lr": 1.0000000000000003e-05,
+      "d_lr_mult": 1799.9999999999998,
+      "prior_lr_mult": 2999.9999999999986,
+      "ema_decay": null
+    }
+  ],
+  "failed_controls": [
+    "cell2",
+    "cell3"
+  ],
+  "unmeasured_controls": [
+    "cell5"
+  ],
+  "profile": {
+    "training_updates": 32,
+    "horizon": 128,
+    "batch": 2,
+    "comparison_cases": 2,
+    "native_hidden_width": 6656,
+    "precision": "NF4/BF16",
+    "ParticleGAN": "0.9.5",
+    "interface": "Original Meta chat roles, low reasoning, add_generation_prompt=True and original native ABI"
+  },
+  "candidate_assessments": [
+    {
+      "control_id": "cell0",
+      "status": "pass",
+      "nominal_cases": 2,
+      "cases": [
+        {
+          "case_id": "garden-seed42",
+          "status": "pass",
+          "finished_output": {
+            "artifact_id": "raw32.txt",
+            "bytes": 1228,
+            "sha256": "b8dc5fe3e248411a33f4e794c2f690769de1b064ee99757acf3f9af4aafece6b"
+          },
+          "first_observation": {
+            "artifact_id": "first-audit_42a593f645d27761.json",
+            "bytes": 5090,
+            "sha256": "4dd3b8e9b1e2e4be3b1c3c6e6299d329c7e5196640575a3ffb84d9a0a70dea1c"
+          }
+        },
+        {
+          "case_id": "coast-seed43",
+          "status": "pass",
+          "finished_output": {
+            "artifact_id": "raw32.txt",
+            "bytes": 1497,
+            "sha256": "23c13870194320ce4232f2120570ae6645bb05275d0271de49cfe938772d19e5"
+          },
+          "first_observation": {
+            "artifact_id": "first-audit_c940e212fb5b21ce.json",
+            "bytes": 5781,
+            "sha256": "b5a6ede0464d83deaf52859bdb57e618f726e1e004d95ec1026adf977dca4ade"
+          }
+        }
+      ]
+    },
+    {
+      "control_id": "cell1",
+      "status": "pass",
+      "nominal_cases": 2,
+      "cases": [
+        {
+          "case_id": "garden-seed42",
+          "status": "pass",
+          "finished_output": {
+            "artifact_id": "raw32.txt",
+            "bytes": 1545,
+            "sha256": "e7709d52a686385ec914e655b99cca9de386c35e69d3b6e564bbb1ab2ddf02b1"
+          },
+          "first_observation": {
+            "artifact_id": "first-audit_a279ac3f8a7e2629.json",
+            "bytes": 5433,
+            "sha256": "0e6d7a134396757d238e2e0f0e5192443e3a27f2646c76912ed4f0f221286bd2"
+          }
+        },
+        {
+          "case_id": "coast-seed43",
+          "status": "pass",
+          "finished_output": {
+            "artifact_id": "raw32.txt",
+            "bytes": 1540,
+            "sha256": "3c61eaa318e04ad564f2a5dac9ca8617d7bb7a6629da20a5b530148bb7fe2b9c"
+          },
+          "first_observation": {
+            "artifact_id": "first-audit_26b29353dc97bb18.json",
+            "bytes": 5123,
+            "sha256": "6c6aa36be549e2327db583b02bcc0c4465bc5c4c4a13e556edb8f7a714268a0c"
+          }
+        }
+      ]
+    },
+    {
+      "control_id": "cell2",
+      "status": "fail",
+      "nominal_cases": 2,
+      "cases": [
+        {
+          "case_id": "garden-seed42",
+          "status": "fail",
+          "finished_output": {
+            "artifact_id": "raw32.txt",
+            "bytes": 2023,
+            "sha256": "0553096853957256528673a3372ca10d936623a100ebf93b4ce0927f93510fe1"
+          },
+          "first_observation": {
+            "artifact_id": "first-audit_8c66855441430369.json",
+            "bytes": 5244,
+            "sha256": "67cbc6bc92f25fa145c6a783abd0811e4330bd06c164627f5c5faf4ed9b9b401"
+          }
+        },
+        {
+          "case_id": "coast-seed43",
+          "status": "unmeasured",
+          "finished_output": {
+            "artifact_id": "raw32.txt",
+            "bytes": 2246,
+            "sha256": "61e3053958ca84865a0afcc78e9171442dbbf16e5f4411779a8e3093f35dbe60"
+          },
+          "first_observation": null
+        }
+      ]
+    },
+    {
+      "control_id": "cell3",
+      "status": "fail",
+      "nominal_cases": 2,
+      "cases": [
+        {
+          "case_id": "garden-seed42",
+          "status": "fail",
+          "finished_output": {
+            "artifact_id": "raw32.txt",
+            "bytes": 1537,
+            "sha256": "4bd8695bd73095cb48d7733d375c99b70b8649f76551ca199d7a863049136ef3"
+          },
+          "first_observation": {
+            "artifact_id": "first-audit_659bcf7a143d45e7.json",
+            "bytes": 4944,
+            "sha256": "3128f86758da1a123672686c3ddda3de63a3d57b77918dc5b01f576ef016f9ab"
+          }
+        },
+        {
+          "case_id": "coast-seed43",
+          "status": "unmeasured",
+          "finished_output": {
+            "artifact_id": "raw32.txt",
+            "bytes": 1537,
+            "sha256": "4bd8695bd73095cb48d7733d375c99b70b8649f76551ca199d7a863049136ef3"
+          },
+          "first_observation": null
+        }
+      ]
+    },
+    {
+      "control_id": "cell4",
+      "status": "pass",
+      "nominal_cases": 2,
+      "cases": [
+        {
+          "case_id": "garden-seed42",
+          "status": "pass",
+          "finished_output": {
+            "artifact_id": "raw32.txt",
+            "bytes": 1256,
+            "sha256": "1a1ad7b5f6f3c690def057c02105420f2e2c92091faca3a4378bc223604d159d"
+          },
+          "first_observation": {
+            "artifact_id": "first-audit_ce6fdc901452b68a.json",
+            "bytes": 5015,
+            "sha256": "f0f8486c543fa12a8a3bd37fc86ed2afd8e83359fc379d323f7a952dcc68f5f5"
+          }
+        },
+        {
+          "case_id": "coast-seed43",
+          "status": "pass",
+          "finished_output": {
+            "artifact_id": "raw32.txt",
+            "bytes": 1696,
+            "sha256": "e0981d9ef53658de5dec02d9d01ad29a4cd78bc486f0d884aad31574023a5b78"
+          },
+          "first_observation": {
+            "artifact_id": "first-audit_6a573ac7e322d61c.json",
+            "bytes": 5000,
+            "sha256": "2f61e2a23523f7926100160ce8a046f98bd8e7a4101da0c051646a64e8d40b12"
+          }
+        }
+      ]
+    },
+    {
+      "control_id": "cell5",
+      "status": "unmeasured",
+      "nominal_cases": 2,
+      "cases": [
+        {
+          "case_id": "garden-seed42",
+          "status": "unmeasured",
+          "finished_output": {
+            "artifact_id": "raw32.txt",
+            "bytes": 1101,
+            "sha256": "c72761af8c5829c4422299029366f51a8ead9001febf7076596052ed63079791"
+          },
+          "first_observation": {
+            "artifact_id": "first-audit_c77c1e05fd663c4b.json",
+            "bytes": 5746,
+            "sha256": "cd643322bec6c08b77da0548d9d40b443a93ff1775eed63263b0ec99c437cfa2"
+          }
+        },
+        {
+          "case_id": "coast-seed43",
+          "status": "unmeasured",
+          "finished_output": {
+            "artifact_id": "raw32.txt",
+            "bytes": 1366,
+            "sha256": "c64497b59a665cbbf49e52ace8216cc4bddebb9c474d6719b2a4028130fc723a"
+          },
+          "first_observation": null
+        }
+      ]
+    }
+  ],
+  "checkpoint_guard_scope": "Actual FULL32-bound persistent failures block cell2/3 updates, resume and selection. Whole two-case saved-output passes0/1/4 do not claim completed FULL-checkpoint guard binding for these passing arms; retain that separate integration boundary.",
+  "effect_selection_scope": "All six original cheerfulness means remain0.0. Eligible0/1/4 remain tied; no unique/default LR. Cell5 technical observer error is unmeasured, not model failure. No rerating, relaxed parser, repeated training or extra confirmation.",
+  "historical_published_controls": "20 original PG82 showcase/released directions and their loaders/weights remain unchanged and separate from this local PG0.9.5 RAW32 cohort.",
+  "source_current_rate_pack_sha256": "0f58a6200f3f3ddaba4772c833592b69d50b52d68cc55cde3924d0f141327cd7",
+  "completed_LR_decision": true,
+  "additional_fresh_confirmation_required": false,
+  "selected_unique_control": null
+}

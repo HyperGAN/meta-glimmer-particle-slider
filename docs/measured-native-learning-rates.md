@@ -1,5 +1,19 @@
 # Meta/chat native PG0.9.5 learning rates
 
+## Current eligible subset of the preserved tie
+
+The separate qualified catastrophic-only check passes both saved nominal cases
+for **cell0/G0.0001, cell1/G0.001 and cell4/G0.000010000000000000003**.
+**Cell2/G0.012 and cell3/G0.036 fail**; actual FULL32-bound core guards persistently
+block their updates, resume and selection. **Cell5/G0.00003 remains unmeasured**
+after an observer JSON error, with no retry or relaxed parser; this is not model
+failure. The three passing arms remain effect-tied at zero, so there is no
+unique/default selection. Preserve all six original scores and option tuples.
+See [current scope](current-eligibility-20261109.md) and
+[current eligible option dictionaries](current-eligible-rates.json).
+These passing output cohorts do not claim completed FULL-checkpoint guard
+binding for0/1/4, generic language quality or a repaired effect instrument.
+
 ## Completed finished-output decision: six-way zero tie
 
 All six existing saved RAW32 candidates were compared on the same two frozen
@@ -39,7 +53,7 @@ For the real standalone factory interface:
 ```python
 from glimmer_native.lifecycle import config
 
-# candidate_options is an explicitly chosen retained tied_rate_overrides dict.
+# candidate_options is explicitly chosen from current_eligible_tied_rate_overrides.
 # The zero tie recommends no new LR; this example only constructs configuration.
 session_config = config(
     snapshot, meta_paired_tokens_file, admitted_gpu_uuid,

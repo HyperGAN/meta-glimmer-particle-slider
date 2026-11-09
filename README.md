@@ -38,6 +38,16 @@ and [portable metadata](docs/finished-output-lr-decision.json). Reuse the comple
 searches, saved RAW checkpoints, outputs and first scores; no rerating, extra
 confirmation, repeated training or SSE tiebreak is required.
 
+**Current catastrophic eligibility is separate from that six-way zero tie:**
+saved arms **cell0/G0.0001, cell1/G0.001 and cell4/G0.000010000000000000003**
+pass both nominal cases. **Cell2/G0.012 and cell3/G0.036 fail** and their exact
+FULL32 guard states block update/resume/selection. **Cell5/G0.00003 is
+unmeasured** after an observer JSON error, not a model failure. All six original
+zero scores/options remain unchanged; the three passing arms still give no
+unique/default LR. Passed output checks are not completed FULL-checkpoint guard
+integration for0/1/4. See [current eligibility](docs/current-eligibility-20261109.md)
+and [sanitized current options](docs/current-eligible-rates.json).
+
 Only the equal-case intended-effect intensity ON minus matched OFF in finished
 answers selects LR. The historical G0.00003 RAW128 teacher-response score
 `0.2249722810441098` remains diagnostic, not an output-effect recommendation.

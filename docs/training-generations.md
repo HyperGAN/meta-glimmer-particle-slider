@@ -144,5 +144,9 @@ answers. Teacher-response SSE, preservation, beauty, confidence and completion
 are diagnostics, never selectors or tiebreaks. Reuse completed searches, saved
 RAW checkpoints, outputs and first scores; no extra confirmation or rerating is
 required. The separate Meta native cohort has a [completed six-way zero tie](measured-native-learning-rates.md),
-so no LR/default change is selected. Plain Glimmer retains its separate positive
+so no unique LR/default change is selected. Its separate catastrophic eligibility
+check passes saved0/1/4, fails2/3 with persistent FULL32 guards, and leaves5
+unmeasured after an observer JSON error; all six original scores remain.
+See [current eligible options and boundaries](current-eligibility-20261109.md).
+Plain Glimmer retains its separate positive
 two-rate tie. Neither decision qualifies the CPU fixture as a pretrained control. [Previous guide and source metadata](history/pre-pg095/training-generations.md) retain the prior pins.

@@ -9,6 +9,13 @@ rerating or repeated training is required. The earlier G0.00003 RAW128
 teacher-response score0.2249722810441098 and mechanical continuation/RAW proofs
 remain historical evidence, not a finished-answer effect recommendation.
 
+The later separate catastrophic check leaves current eligible saved arms0/1/4,
+failed2/3 and unmeasured5. All six original zero effect scores remain; no unique
+LR/default is chosen. The actual FULL32-bound guards block2/3; output passes for
+0/1/4 do not claim completed FULL guard binding. The cell5 observer JSON error
+is not model failure. [Current eligibility and options](current-eligibility-20261109.md)
+preserve all checkpoints/old results without repeated training or judgments.
+
 The native implementation is the separate [standalone package at `b621a32`](https://github.com/HyperGAN/glimmer-particle-sliders/tree/b621a32bced45c6b5466113336bc9962bfa6f18e/native-candidate),
 version 0.2.0, shared core 0.13.0 at `3dd672a7f9b8c169daef90fd63e4bb42b9ddc423`
 and published ParticleGAN 0.9.5. Its native package hashes exactly match the
