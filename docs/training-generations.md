@@ -139,4 +139,10 @@ The historical PG0.9.4 [distinct LR validation receipt](https://github.com/Hyper
 
 Both standalone packages pin core **0.13.0** at `3dd672a7f9b8c169daef90fd63e4bb42b9ddc423`. The [new validation receipt](https://github.com/HyperGAN/glimmer-particle-sliders/blob/bcd39e7467d1b2e02f38f67d9935ab342aaadbda/docs/pg095-cpu-validation.json) records 103 installed CPU fixture and 75 native CPU checks, wheel/sdist/installed source parity and the exact 577-file core inventory. These checks load no pretrained weights. The [native guide](native-nf4-handoff.md) points to the separate native package; its earlier PG801 proof remains historical. New training requires fresh source/cohort identities.
 
-Select and independently confirm rates with held-out RAW FP64 equal-example pooled relative SSE as the sole metric. Preservation and media observations are optional diagnostics. The separate Meta native cohort now has an [independently confirmed scoped preset](measured-native-learning-rates.md); this does not qualify the CPU fixture as a pretrained control. [Previous guide and source metadata](history/pre-pg095/training-generations.md) retain the prior pins.
+Select rates only by the equal-case intended-effect ON−OFF mean in finished
+answers. Teacher-response SSE, preservation, beauty, confidence and completion
+are diagnostics, never selectors or tiebreaks. Reuse completed searches, saved
+RAW checkpoints, outputs and first scores; no extra confirmation or rerating is
+required. The separate Meta native cohort has a [completed six-way zero tie](measured-native-learning-rates.md),
+so no LR/default change is selected. Plain Glimmer retains its separate positive
+two-rate tie. Neither decision qualifies the CPU fixture as a pretrained control. [Previous guide and source metadata](history/pre-pg095/training-generations.md) retain the prior pins.

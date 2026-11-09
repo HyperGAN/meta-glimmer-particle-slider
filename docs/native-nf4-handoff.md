@@ -1,12 +1,13 @@
 # Current standalone native Glimmer training
 
-The current Meta PG0.9.5 native cohort has completed exact full-state
-continuation, public RAW/OFF validation and unused-example confirmation.
-Use the [measured Meta preset and factory example](measured-native-learning-rates.md):
-G `0.00003`, D `0.018000000000000002`, bank `0.029999999999999995`,
-128 updates, batch 2, seed 7 and `ema_decay=None`. Its four-example unused RAW
-error is `0.2249722810441098` versus OFF 1.0, independently reproduced from the
-saved fields. This is a scoped response result, not a generated-text claim.
+The current Meta/chat PG0.9.5 finished-output comparison is complete: all six
+saved RAW32 rates tie at zero cheerful-effect ON−OFF mean, with fixed D/bank,
+batch2 and horizon128. **No LR or default change is selected.**
+[All tied options, actual factory interface and scope](measured-native-learning-rates.md).
+Reuse the existing searches, RAWs, answers and scores; no extra confirmation,
+rerating or repeated training is required. The earlier G0.00003 RAW128
+teacher-response score0.2249722810441098 and mechanical continuation/RAW proofs
+remain historical evidence, not a finished-answer effect recommendation.
 
 The native implementation is the separate [standalone package at `b621a32`](https://github.com/HyperGAN/glimmer-particle-sliders/tree/b621a32bced45c6b5466113336bc9962bfa6f18e/native-candidate),
 version 0.2.0, shared core 0.13.0 at `3dd672a7f9b8c169daef90fd63e4bb42b9ddc423`
@@ -105,13 +106,13 @@ historical artifact compatibility were not established.
 The superseded PG801 matched-search plan was: G 0.0001/0.001/0.012/0.036,
 32 updates each on a common 128 schedule, raw selection and EMA disabled. Its
 actual common D is 0.018000000000000002 and bank rate 0.029999999999999995; this
-is a distinct frozen cohort from the two-update proof. LR selection and independent
-confirmation use only held-out raw teacher/student relative SSE. Cast student,
-teacher and neutral to FP64 before subtraction, pool positions within each
-example, divide by its teacher-edit energy, then average examples equally.
-Keep the teacher-only valid/excluded set fixed; zero-energy examples remain
-undefined and student failures never remove examples. Compare equal completed
-updates on the same declared schedule horizon.
+is a distinct frozen cohort from the two-update proof. That superseded historical
+plan ranked and confirmed candidates using held-out raw teacher/student relative
+SSE: operands were cast to FP64 before subtraction, positions were pooled within
+each example, ratios used teacher-edit energy and examples had equal weight.
+Its teacher-only valid/excluded set, undefined zero-energy examples and equal
+completed-update/horizon comparison were part of that historical contract.
+This is not a prospective LR-selection instruction.
 
 Actual initialization, stochastic and source/model/data/numerical identity,
 optimizer rates, finite native updates, exact continuation and raw-response replay
