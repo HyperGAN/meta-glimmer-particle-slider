@@ -173,3 +173,8 @@ retain their original loader, upstream pins and training recipe; installing
 the modern package does not convert or retrain them. Do not install this
 historical package in a modern environment. A base install here omits the
 historical training engine until the `legacy` extra is selected.
+
+
+## Optional modern explicit fresh initialization
+
+The [shared standalone fresh95 API](docs/explicit-fresh-initialization.md) provides an opt-in completed-cache route for the modern Meta interface. This historical package and its defaults, checkpoints and entrypoints are unchanged.

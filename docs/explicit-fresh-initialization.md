@@ -1,0 +1,7 @@
+# Explicit fresh initialization in the standalone owner
+
+The optional shared `glimmer_fresh95` API is maintained in the [standalone Glimmer repository](https://github.com/HyperGAN/glimmer-particle-sliders/blob/main/FRESH95.md). Use its separate `fresh95/` distribution with a genuine modern or native owner; no new runtime or duplicate model is added to this historical repository. Do not install the historical PG082 package into the modern owner environment.
+
+Select `interface="meta-glimmer"` and its exact original completed role protocol: neutral `[user]`, positive `[system,user]`, empty final history, reasoning `low`, generation prompt enabled, and original limit128/no truncation. An owner must authenticate already completed original response caches and supply the pristine original component/admission callback. The addon does not invoke the historical tokenizer, teacher collector or trainer.
+
+The shared API has four installed synthetic CPU cases and one tiny update total covering both interfaces. This establishes software identity/state/initialization/cleanup boundaries, not native NF4 execution, finished text or a new LR result. Use the linked guide for explicit fresh versus strict FULL restore and RAW inference, original initialization laws, source/runtime prerequisites and no-weight-EMA settings. All historical Meta cohorts, six-rate ties, checkpoints, controls, scores and entrypoints remain unchanged.
