@@ -1,5 +1,7 @@
 # Meta Glimmer Particle Slider
 
+**Calculated memory:** Native NF4 text-response training: **28 GiB GPU / 14 GiB host**, batch 2/128 tokens, checkpointed. Same Muse-Glimmer backbone as the other Glimmer interface. [Full memory ledger and limits](MEMORY.md). These are planning estimates, not measured peaks.
+
 ## [See the interactive OFF / ON examples →](https://huggingface.co/spaces/ntc-ai/glimmer-particle-sliders)
 
 Choose a slider and compare real saved answers from the same frozen Glimmer base.
