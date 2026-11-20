@@ -4,7 +4,7 @@
     "installation": "standalone-only; do not co-install the historical distribution",
     "namespace": "glimmer_modern",
     "repository": "https://github.com/HyperGAN/glimmer-particle-sliders.git",
-    "commit": "638bf1733ea6b9e8ba9343988fd82a78d486f964",
+    "commit": "fc2fcfc98d13db0a7f313a613459f2793c89a7a9",
     "review": "https://github.com/HyperGAN/glimmer-particle-sliders/pull/13",
     "distribution": "meta-glimmer-modern-response",
     "particlegan_version": "0.11.0",
@@ -92,7 +92,7 @@
   },
   "native_next": {
     "repository": "https://github.com/HyperGAN/glimmer-particle-sliders.git",
-    "commit": "638bf1733ea6b9e8ba9343988fd82a78d486f964",
+    "commit": "fc2fcfc98d13db0a7f313a613459f2793c89a7a9",
     "subdirectory": "native-candidate",
     "core_commit": "c13890f8e2a1ecf1dc8eb9f2a37f9187cb9fea78",
     "particlegan_version": "0.11.0",

@@ -16,7 +16,7 @@ LR/default is chosen. The actual FULL32-bound guards block2/3; output passes for
 is not model failure. [Current eligibility and options](current-eligibility-20261109.md)
 preserve all checkpoints/old results without repeated training or judgments.
 
-For a fresh native cohort, use the separate [standalone native package](https://github.com/HyperGAN/glimmer-particle-sliders/tree/638bf1733ea6b9e8ba9343988fd82a78d486f964/native-candidate)
+For a fresh native cohort, use the separate [standalone native package](https://github.com/HyperGAN/glimmer-particle-sliders/tree/fc2fcfc98d13db0a7f313a613459f2793c89a7a9/native-candidate)
 with core 0.15.1 and ParticleGAN 0.11.0. Use the product's exact CUDA runtime
 instructions and `release-0.11.0` with the continuous domain. Set
 `ema_decay=None` and retain RAW weights.
