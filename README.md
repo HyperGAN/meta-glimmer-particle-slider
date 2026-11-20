@@ -28,7 +28,7 @@ below retain their original recipe for reproduction.
 
 **Model downloads:** [ntc-ai/glimmer-particle-sliders on Hugging Face](https://huggingface.co/ntc-ai/glimmer-particle-sliders).
 
-## Current PG0.9.5 finished-output LR decision
+## Completed November 2026 finished-output LR decision
 
 The separate Meta/chat RAW32 comparison is complete: **all six saved rates tie
 at zero cheerful-effect ON−OFF gain** on both frozen cases. There is **no LR
@@ -154,18 +154,10 @@ Code is MIT licensed; see [LICENSE](LICENSE) and [NOTICE.md](NOTICE.md). Upstrea
 
 ## Choose the training generation
 
-For new ParticleGAN **0.9.5** work, install the standalone modern package in a
-fresh environment and use the `glimmer_modern` shared-response API described in
-[the current training guide](docs/training-generations.md). This reuses the
-[extracted modern Glimmer implementation](https://github.com/HyperGAN/glimmer-particle-sliders/pull/1)
-at an immutable source revision; this repository does not copy its GAN code.
-This historical repository is superseded for new training. The default modern
-route admits its width-12 CPU protocol fixture only. A separate
-[standalone native NF4 handoff](docs/native-nf4-handoff.md) points to the new
-PG0.9.5 source and retains the earlier PG801 pretrained proof separately.
-The current Meta native cohort has a [completed six-way zero LR tie](docs/measured-native-learning-rates.md);
-fresh runs and exact historical continuation still require their own complete source/data
-identities. The default CPU route and historical PG82 installation stay separate.
+For new training, install the standalone Glimmer software using
+`requirements-modern.txt` in a fresh environment. That pin installs Particle
+Sliders core 0.15.1 and ParticleGAN 0.11.0. The [training guide](docs/training-generations.md)
+covers current CPU and native interfaces alongside earlier measurements.
 
 The `glimmer_slider` commands, showcase and 20 published controls above are
 the **historical PG82 generation**. Here PG82 names ParticleGAN source commit
@@ -179,4 +171,4 @@ historical training engine until the `legacy` extra is selected.
 
 ## Optional modern explicit fresh initialization
 
-The [shared standalone fresh95 API](docs/explicit-fresh-initialization.md) provides an opt-in completed-cache route for the modern Meta interface. This historical package and its defaults, checkpoints and entrypoints are unchanged.
+The [shared standalone scoped initialization API](docs/explicit-fresh-initialization.md) provides an opt-in completed-cache route for the modern Meta interface. This historical package and its defaults, checkpoints and entrypoints are unchanged.

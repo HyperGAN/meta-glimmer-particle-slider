@@ -1,6 +1,6 @@
 # Explicit fresh initialization in the standalone owner
 
-The optional shared `glimmer_fresh95` API is maintained in the [standalone Glimmer repository](https://github.com/HyperGAN/glimmer-particle-sliders/blob/main/FRESH95.md). Use its separate `fresh95/` distribution with a genuine modern or native owner; no new runtime or duplicate model is added to this historical repository. Do not install the historical PG082 package into the modern owner environment.
+The optional shared `glimmer_scoped` API is maintained in the [standalone Glimmer repository](https://github.com/HyperGAN/glimmer-particle-sliders/blob/638bf1733ea6b9e8ba9343988fd82a78d486f964/SCOPED.md). Use its separate `scoped/` distribution with a genuine modern or native owner; no new runtime or duplicate model is added to this historical repository. Do not install the historical PG082 package into the modern owner environment.
 
 Select `interface="meta-glimmer"` and its exact original completed role protocol: neutral `[user]`, positive `[system,user]`, empty final history, reasoning `low`, generation prompt enabled, and original limit128/no truncation. An owner must authenticate already completed original response caches and supply the pristine original component/admission callback. The addon does not invoke the historical tokenizer, teacher collector or trainer.
 
