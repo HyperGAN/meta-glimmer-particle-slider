@@ -50,7 +50,7 @@ def load_upstream(checkout):
         raise RuntimeError(
             "Historical PG82 loading requires the legacy extra. In a separate "
             "environment, install '.[legacy]' from this repository. New "
-            "ParticleGAN 0.9.4 training uses the standalone "
+            "ParticleGAN 0.11.0 training uses the standalone "
             "HyperGAN/glimmer-particle-sliders package; see docs/training-generations.md."
         ) from None
     provenance = json.loads(dependency.read_text("direct_url.json") or "{}")
