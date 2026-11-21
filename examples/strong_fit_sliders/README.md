@@ -40,13 +40,13 @@ Reference strings are explanatory synthetic gold, not native training continuati
 
 The proposed transport payload follows the previously inspected NanoGPT Decisions convention: model `typesafe/jev-1.14`, `https://api.nano-gpt.com/api/v1/decisions`, `state`, typed `questions`, `independent=true`, `include_usage=true`. This is source-level compatibility, not a live provider qualification. Candidate output and quoted dialogue are explicitly untrusted data in every judging instruction. A state boundary alone cannot prove prompt-injection resistance; the fixture tests validate construction and policy composition, not Jev's empirical robustness.
 
-## Native PG handoff
+## Historical history-packet format
 
-`flow.build_native_packet(config, cases, selections, tokenizer, tokenizer_sha256=...)` constructs numeric pairs for this repository's existing `glimmer_slider.training.prepare` API. It refuses synthetic fixtures, edited text/tokens, changed definitions, tokenizer mismatches and nonnative targets. Both prefixes receive exactly the same selected native continuation history, at header and up-to-eight-token cutpoints. Short valid answers are capped at their observed length and never padded.
+`flow.build_native_packet(config, cases, selections, tokenizer, tokenizer_sha256=...)` constructs numeric pairs for the historical `glimmer_slider.training.prepare` API. The current standalone `glimmer_native` route has a separate API and environment. See the [training generation guide](../../docs/training-generations.md). It refuses synthetic fixtures, edited text/tokens, changed definitions, tokenizer mismatches and nonnative targets. Both prefixes receive exactly the same selected native continuation history, at header and up-to-eight-token cutpoints. Short valid answers are capped at their observed length and never padded.
 
 The example's `direct_final_prefix_ids` uses the tokenizer's explicit assistant recipient/user continuation template. It is intentionally separate from the released `native.sample`, which is greedy and may emit reasoning-channel tokens. Actual direct-final/stochastic generation and tokenizer support remain **unqualified**; reasoning-channel output cannot be relabeled as a qualifying final answer. `encode_prefix` can inject a separately qualified equivalent encoder, and generation must use that same encoder. This PR does not implement a stochastic native generator or launch one.
 
-Inside a separately qualified owner process, the handoff is:
+For reference, the historical packet preparation sequence is:
 
 ```python
 from strong_fit_sliders.flow import build_native_packet, prepare_native_banks
@@ -54,16 +54,15 @@ from strong_fit_sliders.flow import build_native_packet, prepare_native_banks
 packet = build_native_packet(config, cases, selections, tokenizer,
                              tokenizer_sha256=verified_tokenizer_sha256)
 bank = prepare_native_banks(model, slider, packet, max_tokens=config["max_context"])
-# Pass bank["training"] and bank["evaluation"] to the existing Trainer.
 ```
 
-`prepare_native_banks` calls the unchanged `training.prepare` for training and development separately. It uses actual frozen positive and neutral hidden vectors; the existing Trainer retains its training-only normalization and original PG objective. The selected answer affects the shared causal histories. Jev scores do not become hidden vectors, a supervised answer loss, or an extra PG loss. At history zero the target still comes from the instructed base: filtering does not supply missing model knowledge. Negative strength is not trained. Proposed horizon 1024 and alpha +1 are experiment inputs, not job launch instructions.
+`prepare_native_banks` calls the unchanged `training.prepare` for training and development separately. The legacy helper extracts frozen positive and neutral hidden vectors using the original preparation contract. The selected answer affects the shared causal histories. Jev scores do not become hidden vectors, a supervised answer loss, or an extra PG loss. At history zero the target still comes from the instructed base: filtering does not supply missing model knowledge. Runnable examples use synthetic inputs. A new native fit would need the current standalone input contract and qualified evidence.
 
 This example imports no private queue helpers or unpublished runtime code. Its CPU tests use fake tokenizers and a mocked native prepare boundary. Actual tensor bank preparation, native tokenizer alignment, model loading and training are not established by those fixtures. No native source API is modified by this example.
 
 ## Development and heldout comparisons
 
-`evaluation.development_report` scores base, plain instruction and slider outputs on the fixed development cases for one checkpoint/alpha pair. Choose checkpoint and alpha using highest case-mean pass rate, then lower refusal/pushback subgroup error, then alpha 1, then earlier checkpoint. Preserve the evidence and freeze a lock with its digest, artifact hash, alpha, protocol hash and thresholds before heldout. A proposed lock is not accepted as real evidence without retained native records.
+`evaluation.development_report` scores base, plain instruction and slider outputs on the fixed development cases for one checkpoint/alpha pair. Rank checkpoint and alpha by the mean matched slider-ON minus base-OFF pass score at the prespecified first seed, with equal weight per case. Keep tied results and report subgroup errors separately. Preserve the evidence and freeze a lock with its digest, artifact hash, alpha, protocol hash and thresholds before heldout. A proposed lock is not accepted as real evidence without retained native records.
 
 `evaluation.evaluate` implements four arms: blank base, positive plain instruction, blank prompt with raw slider, and blank base best-of-four. All arms generate four samples with the same seeds, temperature, context and output caps. Primary base/instruction/slider performance uses the prespecified first seed; best-of-four uses its deployable public selector. All-four pass rates are secondary diagnostics. This matches total generation budgets while retaining the distinct selection benefit. Jev selection overhead is additional and must be reported, rather than described as equal total inference cost.
 

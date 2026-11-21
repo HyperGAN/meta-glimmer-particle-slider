@@ -269,7 +269,7 @@ def direct_final_prefix_ids(tokenizer, definition, prompt):
 
 
 def build_native_packet(config, cases, selections, tokenizer, *, tokenizer_sha256, encode_prefix=None):
-    """Create pairs for the existing training.prepare API; no model launch.
+    """Create numeric pairs in the historical training.prepare format.
 
     Selected native token histories are shared exactly between both prefixes.
     A selected answer is NOT a replacement hidden vector or supervised loss.
@@ -310,7 +310,7 @@ def build_native_packet(config, cases, selections, tokenizer, *, tokenizer_sha25
 
 
 def prepare_native_banks(model, slider, packet, *, max_tokens):
-    """Call the released native prepare API, preserving its hidden targets/loss.
+    """Call the historical Meta Glimmer prepare API for native hidden targets.
 
     Requires a separately qualified native process; never invoked by offline
     commands. This helper does not select a device or load a model.

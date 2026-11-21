@@ -195,6 +195,7 @@ class Flows(unittest.TestCase):
                     p=f.request(self.config,c,s,purpose="development_scoring")
                     receipts[f.digest(p)]=receipt(p,decision(c["gold"]["expected_action"]))
         result=e.development_report(self.config,self.cases,records,receipts,artifact_sha256="a"*64,alpha=1.)
+        self.assertEqual(result["intended_effect"], 0.)
         self.assertEqual(len(result["rows"]),48)
         bad=copy.deepcopy(records);bad[0]["case_id"]=self.cases[-1]["id"]
         with self.assertRaises(ValueError):e.development_report(self.config,self.cases,bad,receipts,artifact_sha256="a"*64,alpha=1.)

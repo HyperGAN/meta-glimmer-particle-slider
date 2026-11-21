@@ -1,5 +1,6 @@
 """Heldout inference selection has no private gold; scoring happens after lock."""
 from collections import defaultdict
+from statistics import mean
 from .flow import (MODEL, BOUNDARY, digest, check, questions, request, passes,
                    validate_candidate, validate_decision)
 
@@ -99,7 +100,7 @@ def development_report(config, cases, records, receipts, *, artifact_sha256, alp
     dev = {c["id"]:c for c in cases if c["split"]=="development"}
     expected = {(cid,arm,slot) for cid in dev for arm in ARMS[:3] for slot in range(config["best_of_n"])}
     actual = [(r["case_id"],r["arm"],r["slot"]) for r in records]
-    if len(actual)!=len(expected) or set(actual)!=expected or len(artifact_sha256)!=64 or alpha not in (1.,1.5):
+    if not dev or len(actual)!=len(expected) or set(actual)!=expected or len(artifact_sha256)!=64 or alpha not in (1.,1.5):
         raise ValueError("Incomplete development comparison or invalid checkpoint")
     rows=[]
     for r in records:
@@ -114,9 +115,12 @@ def development_report(config, cases, records, receipts, *, artifact_sha256, alp
         rows.append(dict(case_id=c["id"],arm=arm,slot=r["slot"],
             passed=score_one(config,c,r["candidate"],receipts,purpose="development_scoring"),
             control=c["gold"]["control"],tokens=len(r["candidate"]["token_ids"])))
+    primary = {(row["case_id"], row["arm"]): int(row["passed"]) for row in rows if row["slot"] == 0}
+    gain = mean(primary[cid, "slider"] - primary[cid, "base"] for cid in dev)
     return dict(scope="development_only",artifact_sha256=artifact_sha256,alpha=alpha,
         config_sha256=digest(config),rows=rows,records_sha256=digest(records),
-        selection_rule="Prefer highest case-mean pass rate, then lower false-abstention or wrong-pushback subgroup error, then alpha 1, then earlier checkpoint. Freeze before heldout.")
+        intended_effect=gain,
+        selection_rule="Rank by the mean matched first-seed slider ON minus base OFF pass score. Keep ties.")
 
 
 def evaluate(config, cases, records, scorer_receipts, public_receipts, lock):
