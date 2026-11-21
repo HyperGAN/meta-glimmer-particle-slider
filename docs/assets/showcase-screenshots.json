@@ -1,0 +1,43 @@
+{
+  "space_url": "https://huggingface.co/spaces/ntc-ai/glimmer-particle-sliders",
+  "app_url": "https://ntc-ai-glimmer-particle-sliders.static.hf.space",
+  "space_commit": "dd9d3e3c85a2ece96abfd12070df37cefdcada20",
+  "capture_method": "Supported browser screenshot, persisted byte-for-byte through documented clipboard and local paste UI; no generated or edited pixels.",
+  "screenshots": [
+    {
+      "file": "showcase-sleepy-alpha2.jpg",
+      "bytes": 91966,
+      "sha256": "0181a2829504661a4b36a4c5cfb1b362772ccb079bafc32d3a48d5140308816a",
+      "slider": "Sleepy",
+      "strength": 2,
+      "checkpoint": 1024,
+      "artifact": "raw particles",
+      "prompt": "Explain why leaves change color.",
+      "decoding": {
+        "temperature": 0,
+        "seed": 7
+      },
+      "scope": "both",
+      "saved_at": "2026-11-03T18:08:47.943375+00:00",
+      "image": "Actual browser screenshot, unedited JPEG; first-screen comparison excerpt."
+    },
+    {
+      "file": "showcase-chaotic-alpha2.jpg",
+      "bytes": 96023,
+      "sha256": "b9330b671c4fabccef986c8e29fb05189338de43a04b649d075c993c47ddb35c",
+      "slider": "Chaotic Texting",
+      "strength": 2,
+      "checkpoint": 1024,
+      "artifact": "raw particles",
+      "prompt": "Explain why leaves change color.",
+      "decoding": {
+        "temperature": 0,
+        "seed": 7
+      },
+      "scope": "both",
+      "saved_at": "2026-11-03T18:08:58.683926+00:00",
+      "image": "Actual browser screenshot, unedited JPEG; first-screen comparison excerpt."
+    }
+  ],
+  "limitations": "Saved model outputs are not independently fact-checked. Screenshot excerpts do not replace the complete attempt history and provenance in the Space."
+}

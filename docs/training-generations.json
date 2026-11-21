@@ -1,0 +1,101 @@
+{
+  "schema": "glimmer-training-generations-v1",
+  "modern": {
+    "installation": "standalone-only; do not co-install the historical distribution",
+    "namespace": "glimmer_modern",
+    "repository": "https://github.com/HyperGAN/glimmer-particle-sliders.git",
+    "commit": "fc2fcfc98d13db0a7f313a613459f2793c89a7a9",
+    "review": "https://github.com/HyperGAN/glimmer-particle-sliders/pull/13",
+    "distribution": "meta-glimmer-modern-response",
+    "particlegan_version": "0.11.0",
+    "core_commit": "c13890f8e2a1ecf1dc8eb9f2a37f9187cb9fea78",
+    "cohort": "glimmer-modern-final-hidden-hg-hndl-engine-v5-cpu",
+    "qualification": "width-12 FP32 CPU protocol fixture only; native Glimmer unqualified",
+    "verification": "https://github.com/HyperGAN/glimmer-particle-sliders/pull/13",
+    "learning_rates": {
+      "keys": [
+        "lr",
+        "d_lr_mult",
+        "prior_lr_mult"
+      ],
+      "default_lr": 0.012,
+      "default_d_lr_mult": 1.5,
+      "default_prior_lr_mult": 2.5,
+      "native_calibrated": false
+    },
+    "distribution_version": "0.2.0",
+    "fresh_training_required": true
+  },
+  "historical": {
+    "install_extra": "legacy",
+    "namespace": "glimmer_slider",
+    "particlegan_commit": "82b72661c03377f348ccb76de37cd4ca02d45a8d",
+    "upstream_commit": "1f5b380d317b73779a8aeab63b6bec0093c2c65c",
+    "published_controls": 20,
+    "weights_repository": "https://huggingface.co/ntc-ai/glimmer-particle-sliders",
+    "migration": "Retain original loaders and recipes; no weight conversion or numerical equivalence claim"
+  },
+  "native_current": {
+    "repository": "https://github.com/HyperGAN/glimmer-particle-sliders.git",
+    "commit": "b621a32bced45c6b5466113336bc9962bfa6f18e",
+    "subdirectory": "native-candidate",
+    "distribution": "glimmer-native-response-candidate",
+    "distribution_version": "0.2.0",
+    "namespace": "glimmer_native",
+    "core_commit": "3dd672a7f9b8c169daef90fd63e4bb42b9ddc423",
+    "particlegan_version": "0.9.5",
+    "source_profile": "release-0.9.5",
+    "penalty_input_domain": "continuous",
+    "cohort": "glimmer-native6656-nf4-hg-hndl-pg095-continuous-v2",
+    "pretrained_PG095_qualified": true,
+    "native_LR_calibrated": true,
+    "historical_proof": "native-nf4-handoff.json",
+    "fresh_training_required": true,
+    "measurement_cohort": "meta-glimmer-cheerful-meta20b-nativebcd39-core3dd-PG095-fresh-h128-v1",
+    "measurement": "pg095-native-nf4-128-measurement.json",
+    "measured_preset": "../presets/meta-pg095-native-nf4-128.json",
+    "scope": "Meta native6656 NF4/BF16 response cohort only; G screen with fixed D/bank, not global/joint optimum or language-quality qualification"
+  },
+  "new_training_policy": {
+    "ema_decay": null,
+    "export_selection": "raw",
+    "evaluation_network": "raw",
+    "inference_network": "raw",
+    "EMA_comparison": false,
+    "scope": "Recommended explicit options for new standalone runs; historical source, recipes, tests and weights unchanged"
+  },
+  "historical_modern_cpu": {
+    "installation": "standalone-only; do not co-install the historical distribution",
+    "namespace": "glimmer_modern",
+    "repository": "https://github.com/HyperGAN/glimmer-particle-sliders.git",
+    "commit": "bcd39e7467d1b2e02f38f67d9935ab342aaadbda",
+    "review": "https://github.com/HyperGAN/glimmer-particle-sliders/pull/6",
+    "distribution": "meta-glimmer-modern-response",
+    "particlegan_version": "0.9.5",
+    "core_commit": "3dd672a7f9b8c169daef90fd63e4bb42b9ddc423",
+    "cohort": "glimmer-modern-final-hidden-hg-hndl-pg095-v5-cpu",
+    "qualification": "width-12 FP32 CPU protocol fixture only; native Glimmer unqualified",
+    "verification": "https://github.com/HyperGAN/glimmer-particle-sliders/blob/bcd39e7467d1b2e02f38f67d9935ab342aaadbda/docs/pg095-cpu-validation.json",
+    "learning_rates": {
+      "keys": [
+        "lr",
+        "d_lr_mult",
+        "prior_lr_mult"
+      ],
+      "default_lr": 0.012,
+      "default_d_lr_mult": 1.5,
+      "default_prior_lr_mult": 2.5,
+      "native_calibrated": false
+    },
+    "distribution_version": "0.2.0",
+    "fresh_training_required": true
+  },
+  "native_next": {
+    "repository": "https://github.com/HyperGAN/glimmer-particle-sliders.git",
+    "commit": "fc2fcfc98d13db0a7f313a613459f2793c89a7a9",
+    "subdirectory": "native-candidate",
+    "core_commit": "c13890f8e2a1ecf1dc8eb9f2a37f9187cb9fea78",
+    "particlegan_version": "0.11.0",
+    "scope": "CPU software checks for fresh RAW-only native API"
+  }
+}

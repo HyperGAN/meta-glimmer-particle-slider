@@ -1,0 +1,128 @@
+{
+  "schema": "documented-finished-output-LR-decision-v1",
+  "product_id": "meta-glimmer-particle-slider",
+  "as_of": "2026-11-09",
+  "selection_metric": "Equal-case mean intended-effect intensity ON minus matched OFF in finished outputs",
+  "teacher_SSE_used_for_selection": false,
+  "preservation_beauty_confidence_or_completion_tiebreak": false,
+  "prospective_ema_decay": null,
+  "source_rate_pack_SHA256": "d06a3585ef9b3aaccfffe6352beb419b289c860c49c96a8df30c9459dda4a573",
+  "status": "finished_output_compared_all_six_tied_no_rate_selected",
+  "rate_overrides": null,
+  "tied_rate_overrides": [
+    {
+      "lr": 0.0001,
+      "d_lr_mult": 180.0,
+      "prior_lr_mult": 299.99999999999994,
+      "ema_decay": null
+    },
+    {
+      "lr": 0.001,
+      "d_lr_mult": 18.0,
+      "prior_lr_mult": 29.999999999999996,
+      "ema_decay": null
+    },
+    {
+      "lr": 0.012,
+      "d_lr_mult": 1.5,
+      "prior_lr_mult": 2.4999999999999996,
+      "ema_decay": null
+    },
+    {
+      "lr": 0.036,
+      "d_lr_mult": 0.5000000000000001,
+      "prior_lr_mult": 0.8333333333333333,
+      "ema_decay": null
+    },
+    {
+      "lr": 1.0000000000000003e-05,
+      "d_lr_mult": 1799.9999999999998,
+      "prior_lr_mult": 2999.9999999999986,
+      "ema_decay": null
+    },
+    {
+      "lr": 3e-05,
+      "d_lr_mult": 600.0,
+      "prior_lr_mult": 999.9999999999998,
+      "ema_decay": null
+    }
+  ],
+  "tied_best_controls": [
+    "cell0",
+    "cell1",
+    "cell2",
+    "cell3",
+    "cell4",
+    "cell5"
+  ],
+  "actual_rates": null,
+  "comparison_updates": 32,
+  "comparison_cases": 2,
+  "mean_effect_gain": 0.0,
+  "all_candidate_means": [
+    {
+      "control_id": "cell0",
+      "G": 0.0001,
+      "D": 0.018000000000000002,
+      "bank": 0.029999999999999995,
+      "mean_effect_gain": 0.0
+    },
+    {
+      "control_id": "cell1",
+      "G": 0.001,
+      "D": 0.018000000000000002,
+      "bank": 0.029999999999999995,
+      "mean_effect_gain": 0.0
+    },
+    {
+      "control_id": "cell2",
+      "G": 0.012,
+      "D": 0.018000000000000002,
+      "bank": 0.029999999999999995,
+      "mean_effect_gain": 0.0
+    },
+    {
+      "control_id": "cell3",
+      "G": 0.036,
+      "D": 0.018000000000000002,
+      "bank": 0.029999999999999995,
+      "mean_effect_gain": 0.0
+    },
+    {
+      "control_id": "cell4",
+      "G": 1.0000000000000003e-05,
+      "D": 0.018000000000000002,
+      "bank": 0.029999999999999995,
+      "mean_effect_gain": 0.0
+    },
+    {
+      "control_id": "cell5",
+      "G": 3e-05,
+      "D": 0.018000000000000002,
+      "bank": 0.029999999999999995,
+      "mean_effect_gain": 0.0
+    }
+  ],
+  "scope": "Matched saved RAW32, six actual rates, two frozen cases; original model/native/ABI identities retained. Complete exploratory model measurement, no fresh confirmation or default change.",
+  "completed_search_reused": true,
+  "next_step": "No LR change from the all-zero tie. Reuse existing results and checkpoints; no repeat LR search or rerating.",
+  "evidence": {
+    "result": {
+      "artifact_id": "result.json",
+      "bytes": 12930,
+      "sha256": "0c868925197017f7df003e3469399aa9c143a6bf3e587a926c5c76f3f85a88d0"
+    },
+    "decision": {
+      "artifact_id": "root-existing-six-arm-RAW32-effect-decision-v1.json",
+      "bytes": 933,
+      "sha256": "3e7bb3b256ccb9e28faf710675eb96056504177eb955f24c4bbe1a68b62c2c12"
+    }
+  },
+  "usage": "Documentation metadata and exact option literals only; not a complete training configuration, artifact loader, changed package default, or instruction to replay completed training.",
+  "horizon": 128,
+  "batch": 2,
+  "shared_base": "meta-models/Muse-Glimmer-30B",
+  "native_hidden_width": 6656,
+  "interfaces_must_not_pool_scores": true,
+  "interface_scope": "Meta chat roles / low reasoning / add_generation_prompt=True; original native ABI"
+}

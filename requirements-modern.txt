@@ -1,0 +1,1 @@
+meta-glimmer-modern-response @ git+https://github.com/HyperGAN/glimmer-particle-sliders.git@fc2fcfc98d13db0a7f313a613459f2793c89a7a9

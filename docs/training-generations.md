@@ -1,0 +1,142 @@
+# Current training and historical reproduction
+
+New training uses the standalone `glimmer_modern` package from
+Glimmer’s current source. The verified install pins Particle Sliders core
+0.15.1 and ParticleGAN 0.11.0. Use the separate `glimmer_native` package for
+the native API. Both use RAW current weights.
+
+The default modern profile admits a synthetic width-12 FP32 CPU model. It
+uses the shared ParticleGAN game with an explicit BiSPF recipe and a routed
+128 × 4 particle bank. The earlier native preset and its measured results
+retain their original source pins. [Current immutable pins](training-generations.json).
+
+## New training destination
+
+Use a new Python 3.11–3.14 environment, install CPU PyTorch, then install the
+standalone package. Do not install this historical distribution in that
+environment: the modern product's package-isolation contract requires the
+`glimmer_slider` namespace to be absent.
+
+```sh
+python -m venv .venv-modern
+. .venv-modern/bin/activate
+python -m pip install --index-url https://download.pytorch.org/whl/cpu 'torch>=2.6,<3'
+python -m pip install -r requirements-modern.txt
+python -m pip check
+```
+
+The exact source commit makes this CPU software cohort reproducible. Its
+validation applies to the recorded source, environment and protocol.
+The product checks the exact Git origin and recursive source/data contents of
+its shared core. Use a fresh environment: an older installation of the same
+core version must not be silently retained.
+
+This bounded example exercises the actual shared ParticleGAN update, continuation,
+and inference APIs without loading Glimmer weights:
+
+New runs explicitly use `ema_decay=None` and evaluate/export/infer with RAW only.
+The fixture defaults to RAW weights.
+
+```python
+import json
+from pathlib import Path
+
+import torch
+from glimmer_modern.lifecycle import cpu_config
+from particle_sliders.response import open_response
+from particle_sliders.lifecycle import SessionConfig
+from particle_sliders.inference import open_inference
+
+torch.set_num_threads(1)
+rows = {
+    "train": [
+        {"neutral": [1, 3], "positive": [2, 4], "history": [6, 7]},
+        {"neutral": [1, 5], "positive": [2, 8], "history": [9]},
+    ],
+    "evaluation": [
+        {"neutral": [1, 10], "positive": [2, 11], "history": [12]},
+        {"neutral": [1, 13], "positive": [2, 14], "history": [15, 16]},
+    ],
+}
+Path("pairs.json").write_text(json.dumps(rows))
+fixture = cpu_config("pairs.json")
+# Record a fresh cohort identity for this run.
+config = SessionConfig(fixture.backend, "new-modern-raw-only-v1",
+    **{**fixture.options, "ema_decay": None})
+with open_response(config) as run:
+    run.train(stop_after=2)
+    run.checkpoint("modern-training.pt")
+with open_response(config, resume="modern-training.pt") as run:
+    run.train()
+    run.evaluate(split="evaluation", strength=0.5)
+    run.export_inference("modern-raw.pt", selection="raw")
+with open_inference(
+    "modern-raw.pt", operation="response", native_request={"ids": [1, 3, 6, 7]}
+) as run:
+    response = run.response(ids=[1, 3, 6, 7], strength=0.5)
+```
+
+These IDs belong to a 32-token synthetic vocabulary. `response` contains final
+hidden states, not generated text. The modern product owns namespace/API,
+source integrity, exact resume, RAW inference and wrong-cohort rejection tests.
+
+## Historical PG82 profile
+
+The 20 published controls at
+[`ntc-ai/glimmer-particle-sliders`](https://huggingface.co/ntc-ai/glimmer-particle-sliders)
+belong to the original PG82 cohort. Their RAW1024 teachers and distilled PEFT
+students are not relabeled or converted by a new dependency install. Continue
+using the historical loader and exact source revision for these artifacts:
+
+```sh
+python -m venv .venv-legacy
+. .venv-legacy/bin/activate
+python -m pip install --index-url https://download.pytorch.org/whl/cpu 'torch>=2.6,<3'
+python -m pip install '.[legacy,test]'
+git clone https://github.com/HyperGAN/particle-sliders.git ../particle-sliders-pg82
+git -C ../particle-sliders-pg82 checkout 1f5b380d317b73779a8aeab63b6bec0093c2c65c
+CUDA_VISIBLE_DEVICES='' PYTHONDONTWRITEBYTECODE=1 python -m pytest -q --upstream=../particle-sliders-pg82
+```
+
+The unchanged `glimmer_slider` loader checks that upstream checkout and the
+PG82 Git dependency, then executes the original training API. The documented
+`python -m glimmer_slider train|sample|distill` and Studio commands are all
+historical. Add `native` to the legacy extras only for their original optional
+host dependencies. Their existing model admission rules still apply.
+
+Keep the packages in different environments. The modern distribution requires
+ParticleGAN 0.11.0 through the shared core; this repository's `legacy` extra
+requires the exact PG82 Git source. A bare installation here omits PG82 and
+cannot train or load historical controls until `legacy` is selected. It does
+not install the modern distribution. Existing environments created before
+this split remain reproducible at their original source commit; new legacy
+installs must select the `legacy` extra explicitly.
+
+The current modern cohort refuses earlier v1/v2/v3/v4 modern packets and historical
+PG82 packets. Resume an old job with its original source and environment.
+Training equivalent controls with the current objective requires a separately
+qualified new run; updating source does not update existing weights.
+
+The prior v3 target pins corrected core `ddb41423bcefc1fe76cd94d0f9b367353b3ea137`. Its [upstream installed-package receipt](https://github.com/HyperGAN/glimmer-particle-sliders/blob/52e9accfd5e90b7717bde0a027dfe6efb3f565c3/docs/merged-base-validation.json) records 80 wheel and 80 sdist checks plus the shared CLI smoke. The earlier routing validation remains tied to its original source; it is not relabeled.
+
+## Current learning-rate interface
+
+The current standalone target is package 0.2.0 at the commit pinned in `requirements-modern.txt`. Pass optional `lr`, `d_lr_mult`, and `prior_lr_mult` in its common session options or `cpu_config` API. G/base defaults to 0.012; D = `lr * d_lr_mult` (default 1.5), routed bank = `lr * prior_lr_mult` (default 2.5). Inputs must be finite positive numbers; booleans are rejected. These remain inherited defaults, not pretrained Glimmer LR calibration. Changed rates require a fresh experiment configuration; full-state resume retains its original recipe.
+
+The historical PG0.9.4 [distinct LR validation receipt](https://github.com/HyperGAN/glimmer-particle-sliders/blob/0b10e8cacf6aeefc86a4106c0544d4089a576bd6/docs/lr-validation.json) records 103 installed CPU tests and 9-file source/wheel/sdist parity. Old v3 and earlier routing receipts above remain tied to their original source; historical PG82 controls/weights remain unchanged.
+
+## Earlier PG0.9.5 source
+
+The earlier standalone packages pin core **0.13.0** at `3dd672a7f9b8c169daef90fd63e4bb42b9ddc423`. The [new validation receipt](https://github.com/HyperGAN/glimmer-particle-sliders/blob/bcd39e7467d1b2e02f38f67d9935ab342aaadbda/docs/pg095-cpu-validation.json) records 103 installed CPU fixture and 75 native CPU checks, wheel/sdist/installed source parity and the exact 577-file core inventory. These checks load no pretrained weights. The [native guide](native-nf4-handoff.md) points to the separate native package; its earlier PG801 proof remains historical. New training requires fresh source/cohort identities.
+
+Select rates only by the equal-case intended-effect ON−OFF mean in finished
+answers. Teacher-response SSE, preservation, beauty, confidence and completion
+are diagnostics, never selectors or tiebreaks. Reuse completed searches, saved
+RAW checkpoints, outputs and first scores; no extra confirmation or rerating is
+required. The separate Meta native cohort has a [completed six-way zero tie](measured-native-learning-rates.md),
+so no unique LR/default change is selected. Its separate catastrophic eligibility
+check passes saved0/1/4, fails2/3 with persistent FULL32 guards, and leaves5
+unmeasured after an observer JSON error; all six original scores remain.
+See [current eligible options and boundaries](current-eligibility-20261109.md).
+Plain Glimmer retains its separate positive
+two-rate tie. Neither decision qualifies the CPU fixture as a pretrained control. [Previous guide and source metadata](history/pre-pg095/training-generations.md) retain the prior pins.
